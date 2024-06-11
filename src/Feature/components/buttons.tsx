@@ -29,7 +29,7 @@ interface buttonPropetiesProp {
 }
 
 const StyledButtonBorder = styled.button<buttonPropetiesProp>`
-  border: 1px solid #000000;
+  border: 1px solid #000;
   color: #000;
   text-align: center;
   font-family: Roboto;
