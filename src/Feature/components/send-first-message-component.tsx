@@ -73,6 +73,7 @@ const TypingAreaContainer = styled.textarea`
   &::placeholder {
     color: #9f9f9f;
     font-style: italic;
+    font-weight: 400;
   }
 `;
 const ActionButtonContainer = styled.div`
