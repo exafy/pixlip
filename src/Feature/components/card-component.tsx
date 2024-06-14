@@ -11,12 +11,12 @@ export const CardComponent = ({ children, onClick }: CardProps) => {
         onClick?.();
       }}
     >
-      <StyledCardText>{children}</StyledCardText>
+      <StyledCardText className="card-text">{children}</StyledCardText>
     </StyledCard>
   );
 };
 const StyledCardText = styled.div`
-  color: #141414;
+  color: #ffffff;
   text-align: center;
   font-family: Roboto;
   font-size: 16px;
@@ -29,4 +29,12 @@ const StyledCard = styled.div`
   border-radius: 20px;
   border: 1px solid #000000;
   cursor: pointer;
+  background: #000000;
+  transition: 0.4s;
+  :hover {
+    background: #ffffff;
+    .card-text {
+      color: #000000;
+    }
+  }
 `;

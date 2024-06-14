@@ -44,7 +44,7 @@ const StyledButtonBorder = styled.button<buttonPropetiesProp>`
   width: ${(props) => (props.width ? props.width : "100%")};
 `;
 
-const StyledButtonFilled = styled.button`
+const StyledButtonFilled = styled.button<buttonPropetiesProp>`
   border: none;
   color: #ffffff;
   text-align: center;
@@ -57,4 +57,5 @@ const StyledButtonFilled = styled.button`
   border-radius: 20px;
   padding: 10px;
   cursor: pointer;
+  width: ${(props) => (props.width ? props.width : "100%")};
 `;

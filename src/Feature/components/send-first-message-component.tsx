@@ -1,12 +1,33 @@
 import styled from "@emotion/styled";
 import { Icon } from "./icon";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 export const SendFirstMessageCard = () => {
+  const textareaRef = useRef(null);
+
+  useEffect(() => {
+    const textarea = textareaRef.current as any;
+    if (textarea) {
+      const resizeTextarea = () => {
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      };
+
+      resizeTextarea();
+      textarea.addEventListener("input", resizeTextarea);
+      return () => {
+        textarea.removeEventListener("input", resizeTextarea);
+      };
+    }
+  }, []);
   const navigate = useNavigate();
   return (
     <StyledCardContainer>
-      <TypingAreaContainer placeholder="Type here or click mic to talk with me..." />
+      <TypingAreaContainer
+        ref={textareaRef}
+        placeholder="Type here or click mic to talk with me..."
+      />
       <ActionButtonContainer>
         <IconsContainer>
           <Icon name="mic" />
@@ -34,20 +55,26 @@ const StyledCardContainer = styled.div`
 `;
 
 const TypingAreaContainer = styled.textarea`
-  text-decoration: italic;
   height: 50px;
-  color: #141414;
+  color: #000000;
   font-family: Roboto;
   width: 100%;
   border: none;
   outline: none;
   border-radius: 20px;
   font-size: 16px;
-  font-style: italic;
   font-weight: 100;
   line-height: normal;
   letter-spacing: 0.16px;
   background: transparent;
+  transition: 0.4s;
+  resize: none;
+  overflow: hidden;
+  &::placeholder {
+    color: #9f9f9f;
+    font-style: italic;
+    font-weight: 400;
+  }
 `;
 const ActionButtonContainer = styled.div`
   display: flex;
