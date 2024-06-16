@@ -9,8 +9,10 @@ export const TypingArea = () => {
     const textarea = textareaRef.current as any;
     if (textarea) {
       const resizeTextarea = () => {
-        textarea.style.height = "auto";
-        textarea.style.height = `${textarea.scrollHeight}px`;
+        if (textarea.scrollHeight < 200) {
+          textarea.style.height = "auto";
+          textarea.style.height = `${textarea.scrollHeight}px`;
+        }
       };
 
       resizeTextarea();
@@ -66,11 +68,14 @@ const TypingAreaContainer = styled.textarea`
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.16px;
-  margin-top:12px;
+  margin-top: 12px;
   background: transparent;
   transition: 0.4s;
   resize: none;
   position: relative;
+  overflow-y: scroll;
+  min-height: 20px;
+  max-height: 200px;
   &::placeholder {
     color: #9f9f9f;
     font-style: italic;
