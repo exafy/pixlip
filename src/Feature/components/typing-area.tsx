@@ -1,7 +1,25 @@
 import styled from "@emotion/styled";
 import { Icon } from "./icon";
+import { useEffect, useRef } from "react";
+import { text } from "stream/consumers";
 
 export const TypingArea = () => {
+  const textareaRef = useRef(null);
+  useEffect(() => {
+    const textarea = textareaRef.current as any;
+    if (textarea) {
+      const resizeTextarea = () => {
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight}px`;
+      };
+
+      resizeTextarea();
+      textarea.addEventListener("input", resizeTextarea);
+      return () => {
+        textarea.removeEventListener("input", resizeTextarea);
+      };
+    }
+  }, []);
   return (
     <StyledSendMessageContainer>
       <IconsContainer>
@@ -10,7 +28,10 @@ export const TypingArea = () => {
         <Icon size="xx-large" name="description" />
       </IconsContainer>
       <StyledCardContainer>
-        <TypingAreaContainer placeholder="Type here or click mic to talk with me..." />
+        <TypingAreaContainer
+          ref={textareaRef}
+          placeholder="Type here or click mic to talk with me..."
+        />
         <Icon name="send" onClick={() => {}} />
       </StyledCardContainer>
       <Icon size="xx-large" name="mic" />
@@ -35,36 +56,34 @@ const IconsContainer = styled.div`
   display: flex;
 `;
 
-const TypingAreaContainer = styled.input`
-  height: inherit;
+const TypingAreaContainer = styled.textarea`
   color: #000000;
   font-family: Roboto;
   width: 100%;
   border: none;
   outline: none;
-  border-radius: 20px;
   font-size: 16px;
-  font-weight: 100;
+  font-weight: 400;
   line-height: normal;
   letter-spacing: 0.16px;
+  margin-top:12px;
   background: transparent;
   transition: 0.4s;
   resize: none;
-  overflow: hidden;
   position: relative;
   &::placeholder {
     color: #9f9f9f;
     font-style: italic;
-    font-weight: 400;
+    font-weight: 100;
   }
 `;
 
 const StyledCardContainer = styled.div`
   border-radius: 30px;
   border: 2px solid #000;
-  height: 20px;
+  height: fit-content;
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 20px;
+  padding: 0 20px 0 20px;
 `;

@@ -30,10 +30,10 @@ export const SendFirstMessageCard = () => {
       />
       <ActionButtonContainer>
         <IconsContainer>
-          <Icon name="mic" />
-          <Icon name="photo_camera" />
-          <Icon name="image" />
-          <Icon name="description" />
+          <Icon size="x-large" name="mic" />
+          <Icon size="x-large" name="photo_camera" />
+          <Icon size="x-large" name="image" />
+          <Icon size="x-large" name="description" />
         </IconsContainer>
         <Icon
           name="send"
@@ -61,9 +61,8 @@ const TypingAreaContainer = styled.textarea`
   width: 100%;
   border: none;
   outline: none;
-  border-radius: 20px;
   font-size: 16px;
-  font-weight: 100;
+  font-weight: 400;
   line-height: normal;
   letter-spacing: 0.16px;
   background: transparent;
@@ -73,7 +72,7 @@ const TypingAreaContainer = styled.textarea`
   &::placeholder {
     color: #9f9f9f;
     font-style: italic;
-    font-weight: 400;
+    font-weight: 100;
   }
 `;
 const ActionButtonContainer = styled.div`
