@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import pixlip from "../../assets/test1.gif";
+import pixlip from "../../assets/pixlip-test1.gif";
 interface WidgetIconProps {
   height?: string;
   width?: string;

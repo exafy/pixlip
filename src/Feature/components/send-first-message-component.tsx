@@ -1,17 +1,22 @@
 import styled from "@emotion/styled";
 import { Icon } from "./icon";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const SendFirstMessageCard = () => {
   const textareaRef = useRef(null);
-
+  const [disableSend, setDisableSend] = useState(true);
   useEffect(() => {
     const textarea = textareaRef.current as any;
     if (textarea) {
       const resizeTextarea = () => {
-        textarea.style.height = "auto";
-        textarea.style.height = `${textarea.scrollHeight}px`;
+        if (textarea.scrollHeight < 120) {
+          textarea.style.height = "auto";
+          textarea.style.height = `${textarea.scrollHeight}px`;
+          textarea["overflow-y"] = "scroll";
+        } else {
+          textarea["overflow-y"] = "hidden";
+        }
       };
 
       resizeTextarea();
@@ -27,6 +32,9 @@ export const SendFirstMessageCard = () => {
       <TypingAreaContainer
         ref={textareaRef}
         placeholder="Type here or click mic to talk with me..."
+        onChange={(event: any) => {
+          console.log(event);
+        }}
       />
       <ActionButtonContainer>
         <IconsContainer>
@@ -37,6 +45,7 @@ export const SendFirstMessageCard = () => {
         </IconsContainer>
         <Icon
           name="send"
+          disable={disableSend}
           onClick={() => {
             navigate("conversation/1");
           }}
@@ -68,7 +77,6 @@ const TypingAreaContainer = styled.textarea`
   background: transparent;
   transition: 0.4s;
   resize: none;
-  overflow: hidden;
   &::placeholder {
     color: #9f9f9f;
     font-style: italic;

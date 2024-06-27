@@ -9,9 +9,12 @@ export const TypingArea = () => {
     const textarea = textareaRef.current as any;
     if (textarea) {
       const resizeTextarea = () => {
-        if (textarea.scrollHeight < 200) {
+        if (textarea.scrollHeight < 120) {
           textarea.style.height = "auto";
           textarea.style.height = `${textarea.scrollHeight}px`;
+          textarea["overflow-y"] = "scroll";
+        } else {
+          textarea["overflow-y"] = "hidden";
         }
       };
 
@@ -46,7 +49,7 @@ const StyledSendMessageContainer = styled.div`
   padding-left: 175px;
   padding-right: 175px;
   height: 100px;
-  align-items: center;
+  align-items: flex-end;
   gap: 10px;
   position: fixed;
   bottom: 20px;
@@ -73,7 +76,8 @@ const TypingAreaContainer = styled.textarea`
   transition: 0.4s;
   resize: none;
   position: relative;
-  overflow-y: scroll;
+  overflow-y: overlay;
+  overflow-x: hidden;
   min-height: 20px;
   max-height: 200px;
   &::placeholder {

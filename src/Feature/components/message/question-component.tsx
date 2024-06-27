@@ -16,4 +16,5 @@ const StyledQuestionText = styled.div`
   letter-spacing: -0.48px;
   height: fit-content;
   width: fit-content;
+  margin-bottom: 30px;
 `;
