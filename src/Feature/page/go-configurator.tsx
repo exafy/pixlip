@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import pixlipLogo from "../../assets/pixlip_logo_classic.svg";
 import { ConfiguratorConversationBox } from "../components/configurator/configurator-conversation-box";
 import { ConfiguratorControls } from "../components/configurator/configurator-controls";
+import { Configurator3dLayout } from "../components/configurator/configurator-3d";
 
 export const GoConfigurator = () => {
   return (
@@ -11,6 +12,7 @@ export const GoConfigurator = () => {
       </StyledConfiguratorSidePanel>
       <ConfiguratorBoothImageArea>
         <ConfiguratorConversationBox />
+        <Configurator3dLayout />
       </ConfiguratorBoothImageArea>
       <ConfiguratorControls></ConfiguratorControls>
     </StyledConfiguratorLayout>

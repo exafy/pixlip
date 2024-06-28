@@ -3,7 +3,7 @@ import { Slider, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { ColorCircle } from "../color-circle";
 import { Button } from "../buttons";
-import { CardComponent } from "../card-component";
+import { CardComponent, CardComponentOutline } from "../card-component";
 
 export const ConfiguratorControls = () => {
   const [activeStep, setActiveStep] = useState(1);
@@ -31,6 +31,10 @@ export const ConfiguratorControls = () => {
     { id: 2, message: "I need help designing my booth" },
     { id: 3, message: "How can PIXLIP enhance my booth design" },
     { id: 4, message: "What is the shipping cost" },
+  ];
+  const typography = [
+    { id: 1, message: "Inter" },
+    { id: 2, message: "DM Sans" },
   ];
   return (
     <StyledConfiguratorControls>
@@ -126,17 +130,27 @@ export const ConfiguratorControls = () => {
       </StyledColorContainer>
       <StyledControlHeading>Slogans</StyledControlHeading>
       {slogans.map((data) => (
-        <CardComponent  onClick={() => {}} key={data.message}>
+        <CardComponentOutline onClick={() => {}} key={data.message}>
           {data.message}
-        </CardComponent>
+        </CardComponentOutline>
       ))}
+      <Button variant="filled">+ Add slogan</Button>
+      <StyledControlHeading>Typography</StyledControlHeading>
+      {typography.map((data) => (
+        <CardComponentOutline onClick={() => {}} key={data.message}>
+          {data.message}
+        </CardComponentOutline>
+      ))}
+      <Button variant="filled">+ Add Typography</Button>
+      <StyledControlHeading>Image</StyledControlHeading>
+      <Button variant="filled">+ Add image</Button>
     </StyledConfiguratorControls>
   );
 };
 
 const StyledConfiguratorControls = styled.div`
   display: flex;
-  width: 300px;
+  width: 325px;
   overflow-y: overlay;
   flex-direction: column;
   height: calc(100vh - 40px);

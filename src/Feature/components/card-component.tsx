@@ -15,6 +15,18 @@ export const CardComponent = ({ children, onClick }: CardProps) => {
     </StyledCard>
   );
 };
+
+export const CardComponentOutline = ({ children, onClick }: CardProps) => {
+  return (
+    <StyledCardOutline
+      onClick={() => {
+        onClick?.();
+      }}
+    >
+      <StyledCardText className="card-text">{children}</StyledCardText>
+    </StyledCardOutline>
+  );
+};
 const StyledCardText = styled.div`
   color: #ffffff;
   text-align: center;
@@ -38,3 +50,15 @@ const StyledCard = styled.div`
     }
   }
 `;
+
+const StyledCardOutline = styled.div`
+  border-radius: 20px;
+  border: 1px solid #000000;
+  cursor: pointer;
+  background: #ffffff;
+  transition: 0.4s;
+  .card-text {
+    color: #000000;
+  }
+`;
+
