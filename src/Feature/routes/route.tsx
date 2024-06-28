@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import { PageLayout } from "../layout/page-layout";
 import StartConversation from "../page/start-conversation";
 import { ConversationListPage } from "../page/conversations-list-page";
+import { GoConfigurator } from "../page/go-configurator";
 
 const routes = [
   {
@@ -18,6 +19,15 @@ const routes = [
     element: (
       <PageLayout>
         <ConversationListPage></ConversationListPage>
+      </PageLayout>
+    ),
+  },
+
+  {
+    path: "/configurator",
+    element: (
+      <PageLayout>
+        <GoConfigurator></GoConfigurator>
       </PageLayout>
     ),
   },

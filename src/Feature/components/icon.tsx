@@ -3,9 +3,10 @@ import styled from "@emotion/styled";
 interface IconProps {
   name: string;
   size?: string;
+  disable?: boolean;
   onClick?: () => void;
 }
-export const Icon = ({ name, size, onClick }: IconProps) => {
+export const Icon = ({ name, size, disable = false, onClick }: IconProps) => {
   const props: any = {};
 
   if (size) {
@@ -13,9 +14,12 @@ export const Icon = ({ name, size, onClick }: IconProps) => {
   }
   return (
     <StyledIcon
-      className="material-icons"
+      className="material-icons-round"
+      disbabled={disable}
       onClick={() => {
-        onClick?.();
+        if (disable) {
+          onClick?.();
+        }
       }}
       {...props}
     >
@@ -25,10 +29,11 @@ export const Icon = ({ name, size, onClick }: IconProps) => {
 };
 interface IconDesignProps {
   size: number;
+  disbabled: boolean;
 }
 const StyledIcon = styled.span<IconDesignProps>`
-  &.material-icons {
-    color: #000000;
+  &.material-icons-round {
+    color: ${(props) => (props.disbabled ? "#9F9F9F" : "#000000")};
     cursor: pointer;
     font-size: ${(props) => (props.size ? props.size : "unset")};
   }
