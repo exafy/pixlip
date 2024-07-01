@@ -53,7 +53,6 @@ const StyledCard = styled.div`
 
 const StyledCardOutline = styled.div`
   border-radius: 20px;
-  border: 1px solid #000000;
   cursor: pointer;
   background: #ffffff;
   transition: 0.4s;

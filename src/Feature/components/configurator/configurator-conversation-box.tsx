@@ -27,9 +27,10 @@ export const ConfiguratorConversationBox = () => {
   return (
     <StyledSendMessageContainer>
       <IconsContainer>
-        <Icon size="xx-large" name="photo_camera" />
-        <Icon size="xx-large" name="image" />
-        <Icon size="xx-large" name="description" />
+        <Icon size="xx-large" name="undo" />
+        <Icon size="xx-large" name="redo" />
+        <Icon size="xx-large" name="restart_alt" />
+        <Icon size="xx-large" name="share" />
       </IconsContainer>
       <StyledCardContainer>
         <TypingAreaContainer
@@ -38,7 +39,9 @@ export const ConfiguratorConversationBox = () => {
         />
         <Icon size="xx-large" name="send" onClick={() => {}} />
       </StyledCardContainer>
-      <Icon size="xx-large" name="mic" />
+      <StyledMicIcon>
+        <Icon size="xx-large" name="mic" />
+      </StyledMicIcon>
     </StyledSendMessageContainer>
   );
 };
@@ -47,18 +50,19 @@ const StyledSendMessageContainer = styled.div`
   display: flex;
   padding-left: 20px;
   padding-right: 20px;
-  height: 100px;
-  align-items: center;
+  height: fit-content;
+  align-items: flex-end;
   gap: 10px;
   position: fixed;
   bottom: 20px;
   left: 0;
-  width: calc(100vw - 340px);
+  width: calc(100vw - 400px);
   justify-content: space-between;
 `;
 
 const IconsContainer = styled.div`
   display: flex;
+  height: 50px;
 `;
 
 const TypingAreaContainer = styled.textarea`
@@ -84,7 +88,9 @@ const TypingAreaContainer = styled.textarea`
     font-weight: 100;
   }
 `;
-
+const StyledMicIcon = styled.div`
+  height: 50px;
+`;
 const StyledCardContainer = styled.div`
   border-radius: 30px;
   border: 2px solid #000;

@@ -3,18 +3,26 @@ import pixlipLogo from "../../assets/pixlip_logo_classic.svg";
 import { ConfiguratorConversationBox } from "../components/configurator/configurator-conversation-box";
 import { ConfiguratorControls } from "../components/configurator/configurator-controls";
 import { Configurator3dLayout } from "../components/configurator/configurator-3d";
+import { useState } from "react";
 
 export const GoConfigurator = () => {
+  const [dimensions, setDimensions] = useState({
+    height: 4,
+    width: 4,
+    length: 2,
+  });
   return (
     <StyledConfiguratorLayout>
       <StyledConfiguratorSidePanel>
-        <img src={pixlipLogo} alt="pixlipLogo" />
-      </StyledConfiguratorSidePanel>
-      <ConfiguratorBoothImageArea>
+        <img height={43} width={200} src={pixlipLogo} alt="pixlipLogo" />
+        <Configurator3dLayout
+          height={dimensions.height}
+          width={dimensions.width}
+          length={dimensions.length}
+        />
         <ConfiguratorConversationBox />
-        <Configurator3dLayout />
-      </ConfiguratorBoothImageArea>
-      <ConfiguratorControls></ConfiguratorControls>
+      </StyledConfiguratorSidePanel>
+      <ConfiguratorControls onControlChange={() => {}} />
     </StyledConfiguratorLayout>
   );
 };
@@ -36,7 +44,7 @@ const StyledConfiguratorControls = styled.div`
 
 const StyledConfiguratorSidePanel = styled.div`
   display: flex;
-  width: 200px;
+  width: calc(100% - 300px);
   height: calc(100vh - 40px);
   flex-direction: column;
 `;

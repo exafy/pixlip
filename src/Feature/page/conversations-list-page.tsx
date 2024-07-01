@@ -28,8 +28,6 @@ const StyledChatViewContainer = styled.div`
 export const ConversationListPage = () => {
   const [open, setOpen] = useState(false);
   const { id } = useParams();
-
-  const conversationId = parseInt(id as string);
   return (
     <>
       <StyledConversationLayout>
@@ -57,7 +55,6 @@ export const ConversationListPage = () => {
         }}
         key={"ahsan"}
         openConfigutrator={open}
-        id={""}
       />
     </>
   );
