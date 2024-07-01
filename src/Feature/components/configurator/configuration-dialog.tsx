@@ -1,29 +1,39 @@
 import Dialog from "@mui/material/Dialog";
 import { Icon } from "../icon";
 import styled from "@emotion/styled";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 interface ConfiguratorProps extends PropsWithChildren {
   openConfigutrator: boolean;
-  id: string;
   onClose?: () => void;
 }
 export const ConfiguratorDialog = ({
-  openConfigutrator = false,
-  id,
+  openConfigutrator,
   onClose,
   children,
 }: ConfiguratorProps) => {
-  const props: any = {};
-  if (openConfigutrator) {
-    props.open = openConfigutrator;
-  }
+  const [open, setOpen] = useState(openConfigutrator);
+  useEffect(() => {
+    setOpen(openConfigutrator);
+  }, [openConfigutrator]);
   const handleClose = () => {
     onClose?.();
   };
   return (
-    <Dialog fullScreen {...props} onClose={handleClose}>
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={() => {
+        handleClose();
+      }}
+    >
       <StyledCloseIcon>
-        <Icon size="x-large" name="cancel" onClick={handleClose} />
+        <Icon
+          size="x-large"
+          name="cancel"
+          onClick={() => {
+            handleClose();
+          }}
+        />
       </StyledCloseIcon>
       {children}
     </Dialog>

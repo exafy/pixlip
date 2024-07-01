@@ -15,7 +15,7 @@ const routes = [
     ),
   },
   {
-    path: "/conversation/:id",
+    path: "/conversation",
     element: (
       <PageLayout>
         <ConversationListPage></ConversationListPage>

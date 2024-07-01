@@ -3,6 +3,12 @@ import { CardComponent } from "../components/card-component";
 import { SendFirstMessageCard } from "../components/send-first-message-component";
 import { ConfiguratorLogo } from "../components/widget-icon";
 import { useNavigate } from "react-router-dom";
+import {
+  generatDeviceId,
+  getDeviceId,
+  setDeviceId,
+} from "../model/pixlip-model";
+import { useEffect } from "react";
 const defaultMessage = [
   { id: 1, message: "Show me what PIXLIP AI can do" },
   { id: 2, message: "I need help designing my booth" },
@@ -11,16 +17,25 @@ const defaultMessage = [
 ];
 export const StartConversation = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    const checkIdExist = getDeviceId();
+    if (!checkIdExist) {
+      const deviceId = generatDeviceId();
+      setDeviceId(deviceId);
+    } else {
+      navigate(`/conversation`);
+    }
+  }, []);
   return (
     <StyledStartConversationContainer>
       <ConfiguratorLogo height="200px" width="200px" />
       <StyledHeadingText>Welcome, this is PIXLIP AI</StyledHeadingText>
       <SendFirstMessageCard />
       <OptionCardContainer>
-        {defaultMessage.map((data, index) => (
+        {defaultMessage.map((data) => (
           <CardComponent
             onClick={() => {
-              navigate(`conversation/${index + 1}`);
+              navigate(`conversation`);
             }}
             key={data.message}
           >

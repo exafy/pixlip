@@ -1,12 +1,25 @@
 import styled from "@emotion/styled";
-import { Slider, Tab, Tabs } from "@mui/material";
+import { Slider } from "@mui/material";
 import { useState } from "react";
 import { ColorCircle } from "../color-circle";
 import { Button } from "../buttons";
-import { CardComponent, CardComponentOutline } from "../card-component";
-
-export const ConfiguratorControls = () => {
-  const [activeStep, setActiveStep] = useState(1);
+import { CardComponentOutline } from "../card-component";
+import { TabComponent } from "../tabs";
+interface ConfiguratorProps {
+  onControlChange: () => void;
+}
+export const ConfiguratorControls = ({
+  onControlChange,
+}: ConfiguratorProps) => {
+  const [activeWall, setActiveWall] = useState<number | null>(2);
+  const [activeCounter, setActiveCounter] = useState<number | null>(1);
+  const [configuratorControls, setConfiguratorControls] = useState({
+    height: 4,
+    width: 12,
+    length: 12,
+    noOfWalls: 2,
+    noOfCounters: 1,
+  });
   const marks = [
     {
       value: 2,
@@ -18,30 +31,42 @@ export const ConfiguratorControls = () => {
       value: 4,
     },
   ];
+
   const Colors = [
-    { color: "#FFFFFF", isActive: true },
+    { color: "#FFFFFF", isActive: false },
     { color: "#5D739C", isActive: false },
     { color: "#D8D8D8", isActive: false },
     { color: "#00B0F0", isActive: false },
     { color: "#0058DD", isActive: false },
     { color: "#000000", isActive: false },
   ];
+
   const slogans = [
     { id: 1, message: "Show me what PIXLIP AI can do" },
     { id: 2, message: "I need help designing my booth" },
     { id: 3, message: "How can PIXLIP enhance my booth design" },
     { id: 4, message: "What is the shipping cost" },
   ];
+
   const typography = [
     { id: 1, message: "Inter" },
     { id: 2, message: "DM Sans" },
   ];
+
+  const handleWallClick = (id: number) => {
+    setActiveWall(id);
+  };
+
+  const handleCounterClick = (id: number) => {
+    setActiveCounter(id);
+  };
+
   return (
     <StyledConfiguratorControls>
       <StyledHeading>GO Configurator</StyledHeading>
       <StyledSmallHeading>Shape your booth</StyledSmallHeading>
       <StyledControlHeading>Length: 6 meters</StyledControlHeading>
-      <StyledSLider>
+      <StyledSlider>
         <Slider
           defaultValue={6}
           color="primary"
@@ -51,9 +76,9 @@ export const ConfiguratorControls = () => {
           max={12}
           step={1}
         />
-      </StyledSLider>
+      </StyledSlider>
       <StyledControlHeading>Width: 6 meters</StyledControlHeading>
-      <StyledSLider>
+      <StyledSlider>
         <Slider
           defaultValue={6}
           color="primary"
@@ -63,71 +88,69 @@ export const ConfiguratorControls = () => {
           max={12}
           step={1}
         />
-      </StyledSLider>
+      </StyledSlider>
       <StyledControlHeading>Height: 2 meters</StyledControlHeading>
-      <StyledSLider>
+      <StyledSlider>
         <Slider
-          defaultValue={2}
+          defaultValue={1}
           color="primary"
           aria-label="Default"
           valueLabelDisplay="auto"
           marks={marks}
-          max={4}
+          max={2.5}
+          min={1}
         />
-      </StyledSLider>
+      </StyledSlider>
       <StyledControlHeading>Wall</StyledControlHeading>
-      <Tabs
-        value={activeStep}
-        onChange={() => {}}
-        aria-label="basic tabs example"
-      >
-        <StyledTabs>
-          <Tab
-            onClick={() => {
-              setActiveStep(1);
-            }}
-            value={1}
-            label="Head Stand"
-          />
-        </StyledTabs>
-        <StyledTabs>
-          <Tab
-            value={2}
-            onClick={() => {
-              setActiveStep(2);
-            }}
-            label="Corner Stand"
-          />
-        </StyledTabs>
-        <StyledTabs>
-          <Tab
-            value={3}
-            onClick={() => {
-              setActiveStep(3);
-            }}
-            label="Inline Stand"
-          />
-        </StyledTabs>
-      </Tabs>
-
+      <StyledTabs>
+        <TabComponent
+          id={1}
+          isActive={activeWall === 1}
+          text="Head Stand"
+          onClick={() => handleWallClick(1)}
+        />
+        <TabComponent
+          id={2}
+          isActive={activeWall === 2}
+          text="Corner Stand"
+          onClick={() => handleWallClick(2)}
+        />
+        <TabComponent
+          id={3}
+          isActive={activeWall === 3}
+          text="Inline Stand"
+          onClick={() => handleWallClick(3)}
+        />
+      </StyledTabs>
       <StyledControlHeading>Counter</StyledControlHeading>
-      <Tabs value={0} onChange={() => {}} aria-label="basic tabs example">
-        <StyledTabs>
-          <Tab value={1} label="Single Counter" />
-        </StyledTabs>
+      <StyledTabs>
+        <TabComponent
+          id={1}
+          isActive={activeCounter === 1}
+          text="Single Counter"
+          onClick={() => handleCounterClick(1)}
+        />
+        <TabComponent
+          id={2}
+          isActive={activeCounter === 2}
+          text="Two Counters"
+          onClick={() => handleCounterClick(2)}
+        />
+      </StyledTabs>
 
-        <StyledTabs>
-          <Tab value={2} label="Single Counter" />
-        </StyledTabs>
-      </Tabs>
-
+      <StyledHeading>Customize your booth</StyledHeading>
       <StyledControlHeading>Color</StyledControlHeading>
       <StyledColorContainer>
         {Colors.map((data) => (
-          <ColorCircle color={data.color} isActive={data.isActive} />
+          <ColorCircle
+            color={data.color}
+            isActive={data.isActive}
+            key={data.color}
+          />
         ))}
         <Button variant="filled">+ Add logo</Button>
       </StyledColorContainer>
+
       <StyledControlHeading>Slogans</StyledControlHeading>
       {slogans.map((data) => (
         <CardComponentOutline onClick={() => {}} key={data.message}>
@@ -167,6 +190,7 @@ const StyledHeading = styled.div`
   font-weight: 700;
   line-height: 48px;
 `;
+
 const StyledSmallHeading = styled.div`
   color: #171a20;
   text-align: center;
@@ -187,7 +211,7 @@ const StyledControlHeading = styled.div`
   line-height: 20px;
 `;
 
-const StyledSLider = styled.div`
+const StyledSlider = styled.div`
   .MuiSlider-root {
     color: #000000;
   }
@@ -195,14 +219,11 @@ const StyledSLider = styled.div`
 `;
 
 const StyledTabs = styled.div`
-  .css-1t2y591 {
-    button {
-      color: #000000;
-    }
-    span {
-      color: #000000;
-    }
-  }
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const StyledColorContainer = styled.div`

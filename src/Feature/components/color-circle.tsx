@@ -4,11 +4,10 @@ interface ColorProps {
   color: string;
 }
 export const ColorCircle = ({ isActive, color }: ColorProps) => {
-  return <StyledCircleColor active={isActive} color={color} />;
+  return <StyledCircleColor color={color} />;
 };
 interface ColorInterface {
   color: string;
-  active: boolean;
 }
 const StyledCircleColor = styled.div<ColorInterface>`
   width: 49px;
@@ -16,6 +15,5 @@ const StyledCircleColor = styled.div<ColorInterface>`
   display: flex;
   border-radius: 50%;
   background-color: ${(props) => (props.color ? props.color : "#ffffff")};
-  border: ${(props) =>
-    props.active ? "1px solid #0071E3" : "1px solid #ffffff"};
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.4);
 `;

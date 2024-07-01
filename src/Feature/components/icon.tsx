@@ -17,7 +17,7 @@ export const Icon = ({ name, size, disable = false, onClick }: IconProps) => {
       className="material-icons-round"
       disbabled={disable}
       onClick={() => {
-        if (disable) {
+        if (!disable) {
           onClick?.();
         }
       }}
