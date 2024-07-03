@@ -77,7 +77,7 @@ export const SendFirstMessageCard = ({
           </IconsContainer>
           <Icon
             name="send"
-            size="x-large"
+            size="xx-large"
             disable={disableSend}
             onClick={() => {
               onSubmit();
