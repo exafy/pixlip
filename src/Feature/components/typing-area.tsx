@@ -7,15 +7,15 @@ interface TypingAreaProps {
   value?: string;
 }
 export const TypingArea = ({ onChange, onSubmit, value }: TypingAreaProps) => {
-  console.log(value);
   const textareaRef = useRef(null);
   const [disableSend, setDisableSend] = useState(true);
+  const [values, setValues] = useState(value as string);
 
   useEffect(() => {
     const textarea = textareaRef.current as any;
     if (textarea) {
       const resizeTextarea = () => {
-        if (textarea.scrollHeight < 100) {
+        if (textarea.scrollHeight < 130) {
           textarea.style.height = "auto";
           textarea.style.height = `${textarea.scrollHeight}px`;
           textarea["overflow-y"] = "scroll";
@@ -36,12 +36,15 @@ export const TypingArea = ({ onChange, onSubmit, value }: TypingAreaProps) => {
   if (value) {
     props.value = value;
   }
-  const handleKeyDown = (event: KeyboardEvent) => {
-    console.log(event.key);
+  const handleKeyDown = (event: any) => {
     if (event.key === "Enter" && !event.shiftKey) {
       event.preventDefault();
-      onSubmit();
+      handleOnSubmit();
     }
+  };
+  const handleOnSubmit = () => {
+    onSubmit();
+    setValues("");
   };
   return (
     <StyledSendMessageContainer>
@@ -54,18 +57,23 @@ export const TypingArea = ({ onChange, onSubmit, value }: TypingAreaProps) => {
         <TypingAreaContainer
           ref={textareaRef}
           onChange={(event: any) => {
+            console.log(event);
             setDisableSend(event.target.value === "");
             onChange(event.target.value);
+            setValues(event.target.value);
           }}
           placeholder="Type here or click mic to talk with me..."
-          {...props}
-          onKeyUp={handleKeyDown}
+          value={values}
+          onKeyUp={(event: any) => {
+            handleKeyDown(event);
+          }}
         />
         <Icon
           name="send"
+          size="xx-large"
           disable={disableSend}
           onClick={() => {
-            onSubmit();
+            handleOnSubmit();
           }}
         />
       </StyledCardContainer>
@@ -92,6 +100,7 @@ const StyledSendMessageContainer = styled.div`
 
 const IconsContainer = styled.div`
   display: flex;
+  gap: 8px;
 `;
 
 const TypingAreaContainer = styled.textarea`
@@ -128,4 +137,5 @@ const StyledCardContainer = styled.div`
   display: flex;
   align-items: center;
   padding: 0 20px 0 20px;
+  background: #fff;
 `;

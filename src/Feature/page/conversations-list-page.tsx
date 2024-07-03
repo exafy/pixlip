@@ -73,8 +73,8 @@ export const ConversationListPage = () => {
       setTyped(message);
       const data = await resumeConversation(message, idInt);
       setOpenedChat(data);
-      setMessage(""); // Clear the input field
-      setTyped(""); // Also clear the typed state
+      setMessage("");
+      setTyped("");
     } catch {}
   };
 

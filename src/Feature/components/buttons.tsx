@@ -41,7 +41,12 @@ const StyledButtonBorder = styled.button<buttonPropetiesProp>`
   padding: 10px;
   background: #ffffff;
   cursor: pointer;
+  transition: 0.4s;
   width: ${(props) => (props.width ? props.width : "100%")};
+  &:hover {
+    background: #000;
+    color: #fff;
+  }
 `;
 
 const StyledButtonFilled = styled.button<buttonPropetiesProp>`
@@ -57,5 +62,11 @@ const StyledButtonFilled = styled.button<buttonPropetiesProp>`
   border-radius: 20px;
   padding: 10px;
   cursor: pointer;
+  transition: 0.4s;
+  border: 1px solid #000;
   width: ${(props) => (props.width ? props.width : "100%")};
+  &:hover {
+    background: #fff;
+    color: #000;
+  }
 `;

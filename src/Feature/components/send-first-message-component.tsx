@@ -15,59 +15,76 @@ export const SendFirstMessageCard = ({
 }: SendFirstMessageCardProps) => {
   const textareaRef = useRef(null);
   const [disableSend, setDisableSend] = useState(true);
-  useEffect(() => {
-    const textarea = textareaRef.current as any;
-    if (textarea) {
-      const resizeTextarea = () => {
-        if (textarea.scrollHeight < 120) {
-          textarea.style.height = "auto";
-          textarea.style.height = `${textarea.scrollHeight}px`;
-          textarea["overflow-y"] = "scroll";
-        } else {
-          textarea["overflow-y"] = "hidden";
-        }
-      };
+    const [values, setValues] = useState(value as string);
 
-      resizeTextarea();
-      textarea.addEventListener("input", resizeTextarea);
-      return () => {
-        textarea.removeEventListener("input", resizeTextarea);
-      };
+    useEffect(() => {
+      const textarea = textareaRef.current as any;
+      if (textarea) {
+        const resizeTextarea = () => {
+          if (textarea.scrollHeight < 130) {
+            textarea.style.height = "auto";
+            textarea.style.height = `${textarea.scrollHeight}px`;
+            textarea["overflow-y"] = "scroll";
+          } else {
+            textarea["overflow-y"] = "hidden";
+          }
+        };
+
+        resizeTextarea();
+        textarea.addEventListener("input", resizeTextarea);
+        return () => {
+          textarea.removeEventListener("input", resizeTextarea);
+        };
+      }
+    }, []);
+    const props: any = {};
+    if (value) {
+      props.value = value;
     }
-  }, []);
-  const navigate = useNavigate();
-  const props: any = {};
-  if (value) {
-    props.value = value;
-  }
-  return (
-    <StyledCardContainer>
-      <TypingAreaContainer
-        {...props}
-        ref={textareaRef}
-        placeholder="Type here or click mic to talk with me..."
-        onChange={(event: any) => {
-          setDisableSend(event.target.value === "");
-          onChange(event.target.value);
-        }}
-      />
-      <ActionButtonContainer>
-        <IconsContainer>
-          <Icon size="x-large" name="mic" />
-          <Icon size="x-large" name="photo_camera" />
-          <Icon size="x-large" name="image" />
-          <Icon size="x-large" name="description" />
-        </IconsContainer>
-        <Icon
-          name="send"
-          disable={disableSend}
-          onClick={() => {
-            onSubmit();
+    const handleOnSubmit = () => {
+      onSubmit();
+      setValues("");
+    };
+    const handleKeyDown = (event: any) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        handleOnSubmit();
+      }
+    };
+    return (
+      <StyledCardContainer>
+        <TypingAreaContainer
+          {...props}
+          ref={textareaRef}
+          placeholder="Type here or click mic to talk with me..."
+          onChange={(event: any) => {
+            setDisableSend(event.target.value === "");
+            onChange(event.target.value);
+            setValues(event.target.value);
+          }}
+          onKeyUp={(event: any) => {
+            handleKeyDown(event);
           }}
         />
-      </ActionButtonContainer>
-    </StyledCardContainer>
-  );
+        <ActionButtonContainer>
+          <IconsContainer>
+            <Icon size="xx-large" name="mic" />
+            <Icon size="xx-large" name="photo_camera" />
+            <Icon size="xx-large" name="image" />
+            <Icon size="xx-large" name="description" />
+          </IconsContainer>
+          <Icon
+            name="send"
+            size="x-large"
+            disable={disableSend}
+            onClick={() => {
+              onSubmit();
+              setValues("");
+            }}
+          />
+        </ActionButtonContainer>
+      </StyledCardContainer>
+    );
 };
 
 const StyledCardContainer = styled.div`
@@ -104,4 +121,5 @@ const ActionButtonContainer = styled.div`
 `;
 const IconsContainer = styled.div`
   display: flex;
+  gap: 5px;
 `;
