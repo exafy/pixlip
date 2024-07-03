@@ -26,7 +26,18 @@ export const startConversation = async (message: string) => {
   const body = {
     conversation_id: -1,
     question: message,
-    device_id: getDeviceId(),
+    device_id: generatDeviceId(),
+  };
+
+  const response = await pixlipApiService.post("/chat/chat-data/", body);
+  return response.data;
+};
+
+export const resumeConversation = async (message: string, id: number) => {
+  const body = {
+    conversation_id: id,
+    question: message,
+    device_id: generatDeviceId(),
   };
 
   const response = await pixlipApiService.post("/chat/chat-data/", body);
@@ -38,7 +49,10 @@ export const getAllConversationList = async (id: number) => {
     device_id: id,
   };
 
-  const response = await pixlipApiService.post("/chat/chat-data/", body);
+  const response = await pixlipApiService.post(
+    "chat/chat-data/get-device-chat/",
+    body
+  );
   return response.data;
 };
 
