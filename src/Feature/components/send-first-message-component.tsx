@@ -69,7 +69,9 @@ export const SendFirstMessageCard = ({
         <ActionButtonContainer>
           <IconsContainer>
             <Icon size="xx-large" name="mic" />
+
             <Icon size="xx-large" name="photo_camera" />
+
             <Icon size="xx-large" name="image" />
             <Icon size="xx-large" name="description" />
           </IconsContainer>
