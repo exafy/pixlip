@@ -7,9 +7,10 @@ import { useState } from "react";
 
 export const GoConfigurator = () => {
   const [dimensions, setDimensions] = useState({
-    height: 4,
+    height: 2,
     width: 4,
-    length: 2,
+    length: 4,
+    noOfWalls: 3,
   });
   return (
     <StyledConfiguratorLayout>
@@ -19,6 +20,7 @@ export const GoConfigurator = () => {
           height={dimensions.height}
           width={dimensions.width}
           length={dimensions.length}
+          numberOfWall={2}
         />
         <ConfiguratorConversationBox />
       </StyledConfiguratorSidePanel>

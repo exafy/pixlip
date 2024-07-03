@@ -7,8 +7,9 @@ import {
   generatDeviceId,
   getDeviceId,
   setDeviceId,
+  startConversation,
 } from "../model/pixlip-model";
-import { useEffect } from "react";
+import { useState } from "react";
 const defaultMessage = [
   { id: 1, message: "Show me what PIXLIP AI can do" },
   { id: 2, message: "I need help designing my booth" },
@@ -16,26 +17,39 @@ const defaultMessage = [
   { id: 4, message: "What is the shipping cost" },
 ];
 export const StartConversation = () => {
+  const [message, setMessage] = useState<string | null>(null);
   const navigate = useNavigate();
-  useEffect(() => {
-    const checkIdExist = getDeviceId();
-    if (!checkIdExist) {
-      const deviceId = generatDeviceId();
-      setDeviceId(deviceId);
-    } else {
-      navigate(`/conversation`);
-    }
-  }, []);
+  const handleStartConversation = async () => {
+    await sendMessageFirstTime(message as string);
+  };
+  const sendMessageFirstTime = async (value: string) => {
+    try {
+      const data = await startConversation(value as string);
+      const checkIdExist = getDeviceId();
+      if (!checkIdExist) {
+        const deviceId = generatDeviceId();
+        setDeviceId(deviceId);
+      }
+      navigate(`/conversation/${data?.details?.conversation_id}`);
+    } catch (e) {}
+  };
   return (
     <StyledStartConversationContainer>
       <ConfiguratorLogo height="200px" width="200px" />
       <StyledHeadingText>Welcome, this is PIXLIP AI</StyledHeadingText>
-      <SendFirstMessageCard />
+      <SendFirstMessageCard
+        onChange={(value: string) => {
+          setMessage(value);
+        }}
+        onSubmit={async () => {
+          handleStartConversation();
+        }}
+      />
       <OptionCardContainer>
         {defaultMessage.map((data) => (
           <CardComponent
-            onClick={() => {
-              navigate(`conversation`);
+            onClick={async (data) => {
+              await sendMessageFirstTime(data as string);
             }}
             key={data.message}
           >

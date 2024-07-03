@@ -3,7 +3,16 @@ import { Icon } from "./icon";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
-export const SendFirstMessageCard = () => {
+interface SendFirstMessageCardProps {
+  onChange: (value: string) => void;
+  onSubmit: () => void;
+  value?: string;
+}
+export const SendFirstMessageCard = ({
+  onChange,
+  onSubmit,
+  value,
+}: SendFirstMessageCardProps) => {
   const textareaRef = useRef(null);
   const [disableSend, setDisableSend] = useState(true);
   useEffect(() => {
@@ -27,13 +36,19 @@ export const SendFirstMessageCard = () => {
     }
   }, []);
   const navigate = useNavigate();
+  const props: any = {};
+  if (value) {
+    props.value = value;
+  }
   return (
     <StyledCardContainer>
       <TypingAreaContainer
+        {...props}
         ref={textareaRef}
         placeholder="Type here or click mic to talk with me..."
         onChange={(event: any) => {
-          console.log(event);
+          setDisableSend(event.target.value === "");
+          onChange(event.target.value);
         }}
       />
       <ActionButtonContainer>
@@ -47,7 +62,7 @@ export const SendFirstMessageCard = () => {
           name="send"
           disable={disableSend}
           onClick={() => {
-            navigate("conversation/1");
+            onSubmit();
           }}
         />
       </ActionButtonContainer>
