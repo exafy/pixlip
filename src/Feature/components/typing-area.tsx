@@ -1,15 +1,21 @@
 import styled from "@emotion/styled";
 import { Icon } from "./icon";
-import { useEffect, useRef } from "react";
-import { text } from "stream/consumers";
-
-export const TypingArea = () => {
+import { useEffect, useRef, useState } from "react";
+interface TypingAreaProps {
+  onChange: (value: string) => void;
+  onSubmit: () => void;
+  value?: string;
+}
+export const TypingArea = ({ onChange, onSubmit, value }: TypingAreaProps) => {
+  console.log(value);
   const textareaRef = useRef(null);
+  const [disableSend, setDisableSend] = useState(true);
+
   useEffect(() => {
     const textarea = textareaRef.current as any;
     if (textarea) {
       const resizeTextarea = () => {
-        if (textarea.scrollHeight < 120) {
+        if (textarea.scrollHeight < 100) {
           textarea.style.height = "auto";
           textarea.style.height = `${textarea.scrollHeight}px`;
           textarea["overflow-y"] = "scroll";
@@ -25,6 +31,18 @@ export const TypingArea = () => {
       };
     }
   }, []);
+
+  const props: any = {};
+  if (value) {
+    props.value = value;
+  }
+  const handleKeyDown = (event: KeyboardEvent) => {
+    console.log(event.key);
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      onSubmit();
+    }
+  };
   return (
     <StyledSendMessageContainer>
       <IconsContainer>
@@ -35,9 +53,21 @@ export const TypingArea = () => {
       <StyledCardContainer>
         <TypingAreaContainer
           ref={textareaRef}
+          onChange={(event: any) => {
+            setDisableSend(event.target.value === "");
+            onChange(event.target.value);
+          }}
           placeholder="Type here or click mic to talk with me..."
+          {...props}
+          onKeyUp={handleKeyDown}
         />
-        <Icon name="send" onClick={() => {}} />
+        <Icon
+          name="send"
+          disable={disableSend}
+          onClick={() => {
+            onSubmit();
+          }}
+        />
       </StyledCardContainer>
       <Icon size="xx-large" name="mic" />
     </StyledSendMessageContainer>
@@ -52,9 +82,12 @@ const StyledSendMessageContainer = styled.div`
   align-items: flex-end;
   gap: 10px;
   position: fixed;
-  bottom: 20px;
+  padding-bottom: 20px;
+  bottom: 0;
+  right: 0;
   width: calc(100vw - 600px);
   justify-content: space-between;
+  background-color: #ffffff;
 `;
 
 const IconsContainer = styled.div`

@@ -1,14 +1,15 @@
 import styled from "@emotion/styled";
 import { PropsWithChildren } from "react";
-interface CardProps extends PropsWithChildren {
-  onClick?: () => void;
+interface CardProps {
+  onClick?: (data: string) => void;
+  children: string;
 }
 
 export const CardComponent = ({ children, onClick }: CardProps) => {
   return (
     <StyledCard
       onClick={() => {
-        onClick?.();
+        onClick?.(children);
       }}
     >
       <StyledCardText className="card-text">{children}</StyledCardText>
@@ -20,7 +21,7 @@ export const CardComponentOutline = ({ children, onClick }: CardProps) => {
   return (
     <StyledCardOutline
       onClick={() => {
-        onClick?.();
+        onClick?.(children);
       }}
     >
       <StyledCardText className="card-text">{children}</StyledCardText>
