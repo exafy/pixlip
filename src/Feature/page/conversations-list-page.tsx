@@ -7,7 +7,14 @@ import { Key, useEffect, useRef, useState } from "react";
 import { ConfiguratorDialog } from "../components/configurator/configuration-dialog";
 import { GoConfigurator } from "./go-configurator";
 import { Awnser } from "../components/message/awnser-component";
-import { getSelectedChatData, resumeConversation } from "../model/pixlip-model";
+import {
+  getAllConversationList,
+  getDeviceId,
+  getSelectedChatData,
+  resumeConversation,
+} from "../model/pixlip-model";
+import { SendFirstMessageCard } from "../components/send-first-message-component";
+import StartConversation from "./start-conversation";
 
 const StyledConversationLayout = styled.div`
   display: flex;
@@ -24,7 +31,21 @@ const StyledContentArea = styled.div`
   position: absolute;
 `;
 
-const StyledChatViewContainer = styled.div`
+const StyledContentAreaNewChat = styled.div`
+  display: flex;
+  width: calc(100vw - 260px);
+  height: calc(100vh - 120px);
+  flex-direction: column;
+  right: 0;
+  bottom: 120px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+`;
+interface ChatItemProps {
+  isDivider: boolean;
+}
+const StyledChatViewContainer = styled.div<ChatItemProps>`
   height: fit-content;
   display: flex;
   width: calc(100vw - 320px);
@@ -32,9 +53,11 @@ const StyledChatViewContainer = styled.div`
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
+  padding-bottom: 20px;
   padding-top: 20px;
   position: relative;
-  border-bottom: 1px solid #9f9f9f;
+  border-bottom: ${(props) =>
+    props.isDivider ? "1px solid #9f9f9f" : "unset"};
 `;
 
 // Utility function to remove unnecessary newlines
@@ -47,14 +70,25 @@ export const ConversationListPage = () => {
   const [opendChat, setOpenedChat] = useState<any>(false);
   const [message, setMessage] = useState<string>("");
   const [typed, setTyped] = useState<string>("");
+  const [chatItems, setChatitem] = useState<any>();
+
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { id } = useParams();
   const idInt = parseInt(id as string);
   useEffect(() => {
     handleOpenedChat(idInt);
-  }, []);
+  }, [idInt]);
 
+  const handleAllChats = async () => {
+    try {
+      const data = await getAllConversationList(getDeviceId() as number);
+      setChatitem(data);
+    } catch (e) {}
+  };
+  useEffect(() => {
+    handleAllChats();
+  }, [idInt]);
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
@@ -87,29 +121,49 @@ export const ConversationListPage = () => {
             handleOpenedChat(id);
             navigate(`/conversation/${id}`);
           }}
+          onNewChat={() => {
+            navigate(`/conversation/${-1}`);
+          }}
+          allChats={chatItems}
         />
-        <StyledContentArea ref={chatContainerRef}>
-          {opendChat?.details?.chat_history?.data.map((chat: any) => (
-            <StyledChatViewContainer key={chat?.response["Entire Answer"]}>
-              <Question>{chat?.question}</Question>
-              <Awnser
-                type="text"
-                buttonText="Configurator"
-                awnser={chat?.response["Entire Answer"]}
-              />
-            </StyledChatViewContainer>
-          ))}
-        </StyledContentArea>
+        {idInt > 1 && (
+          <StyledContentArea ref={chatContainerRef}>
+            {opendChat?.details?.chat_history?.data.map(
+              (chat: any, index: number) => (
+                <StyledChatViewContainer
+                  key={chat?.response["Entire Answer"]}
+                  isDivider={
+                    index !== opendChat?.details?.chat_history?.data?.length - 1
+                  }
+                >
+                  <Question>{chat?.question}</Question>
+                  <Awnser
+                    type="text"
+                    buttonText="Configurator"
+                    awnser={chat?.response["Entire Answer"]}
+                  />
+                </StyledChatViewContainer>
+              )
+            )}
+          </StyledContentArea>
+        )}
+        {idInt === -1 && (
+          <StyledContentAreaNewChat>
+            <StartConversation enabledHeadings={false} />
+          </StyledContentAreaNewChat>
+        )}
       </StyledConversationLayout>
-      <TypingArea
-        onChange={(value: string) => {
-          setMessage(value);
-        }}
-        onSubmit={() => {
-          handleResumeConversation(message);
-        }}
-        value={message}
-      />
+      {idInt > 1 && (
+        <TypingArea
+          onChange={(value: string) => {
+            setMessage(value);
+          }}
+          onSubmit={() => {
+            handleResumeConversation(message);
+          }}
+          value={message}
+        />
+      )}
       <ConfiguratorDialog
         onClose={() => {
           setOpen(false);

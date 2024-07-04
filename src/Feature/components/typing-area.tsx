@@ -70,7 +70,7 @@ export const TypingArea = ({ onChange, onSubmit, value }: TypingAreaProps) => {
         />
         <Icon
           name="send"
-          size="xx-large"
+          size="x-large"
           disable={disableSend}
           onClick={() => {
             handleOnSubmit();
@@ -87,10 +87,10 @@ const StyledSendMessageContainer = styled.div`
   padding-left: 175px;
   padding-right: 175px;
   height: 100px;
-  align-items: flex-end;
+  align-items: center;
   gap: 10px;
   position: fixed;
-  padding-bottom: 20px;
+  margin-bottom: 50px;
   bottom: 0;
   right: 0;
   width: calc(100vw - 600px);
@@ -131,7 +131,7 @@ const TypingAreaContainer = styled.textarea`
 
 const StyledCardContainer = styled.div`
   border-radius: 30px;
-  border: 2px solid #000;
+  border: 1px solid #000;
   height: fit-content;
   width: 100%;
   display: flex;

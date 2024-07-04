@@ -7,6 +7,7 @@ import {
   generatDeviceId,
   getDeviceId,
   setDeviceId,
+  setNewUserChatStatus,
   startConversation,
 } from "../model/pixlip-model";
 import { useState } from "react";
@@ -16,7 +17,12 @@ const defaultMessage = [
   { id: 3, message: "How can PIXLIP enhance my booth design" },
   { id: 4, message: "What is the shipping cost" },
 ];
-export const StartConversation = () => {
+interface StartConversationProps {
+  enabledHeadings?: boolean;
+}
+export const StartConversation = ({
+  enabledHeadings = true,
+}: StartConversationProps) => {
   const [message, setMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const handleStartConversation = async () => {
@@ -29,14 +35,19 @@ export const StartConversation = () => {
       if (!checkIdExist) {
         const deviceId = generatDeviceId();
         setDeviceId(deviceId);
+        setNewUserChatStatus(true);
       }
       navigate(`/conversation/${data?.details?.conversation_id}`);
     } catch (e) {}
   };
   return (
-    <StyledStartConversationContainer>
-      <ConfiguratorLogo height="200px" width="200px" />
-      <StyledHeadingText>Welcome, this is PIXLIP AI</StyledHeadingText>
+    <>
+      {enabledHeadings && (
+        <>
+          <ConfiguratorLogo height="200px" width="200px" />
+          <StyledHeadingText>Welcome, this is PIXLIP AI</StyledHeadingText>
+        </>
+      )}
       <SendFirstMessageCard
         onChange={(value: string) => {
           setMessage(value);
@@ -57,7 +68,7 @@ export const StartConversation = () => {
           </CardComponent>
         ))}
       </OptionCardContainer>
-    </StyledStartConversationContainer>
+    </>
   );
 };
 export default StartConversation;

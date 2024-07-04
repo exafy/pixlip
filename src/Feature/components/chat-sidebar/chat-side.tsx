@@ -16,29 +16,25 @@ const chatItems = [
 ];
 interface SidebarProps {
   onClick: (id: number) => void;
+  onNewChat: () => void;
   activeItem: number;
+  allChats: any;
 }
-export const Sidebar = ({ onClick, activeItem }: SidebarProps) => {
+export const Sidebar = ({
+  onClick,
+  onNewChat,
+  activeItem,
+  allChats,
+}: SidebarProps) => {
   const navigate = useNavigate();
-  const [chatItems, setChatitem] = useState<any>();
-
-  const handleAllChats = async () => {
-    try {
-      const data = await getAllConversationList(getDeviceId() as number);
-      console.log(data);
-      setChatitem(data);
-    } catch (e) {}
-  };
-  useEffect(() => {
-    handleAllChats();
-  }, []);
-  
 
   return (
     <StyledSidebar>
       <StyledIconsContainer>
         <StyledAssetWrapper>
           <img
+            width={220}
+            height={47}
             onClick={() => {
               window.open("https://www.pixlip.com/en/");
             }}
@@ -47,12 +43,16 @@ export const Sidebar = ({ onClick, activeItem }: SidebarProps) => {
           />
           <ConfiguratorLogo height="100px" width="100px" />
         </StyledAssetWrapper>
-
-        <Button variant="outline" onClick={() => navigate("/")}>
+        <Button
+          variant="filled"
+          onClick={() => {
+            onNewChat?.();
+          }}
+        >
           + New chat
         </Button>
         <StyledChatListWrapper>
-          {chatItems?.details.map((data: any) => {
+          {allChats?.details.map((data: any) => {
             const isActive = data.conversation_id === activeItem;
             return (
               <ChatItem
@@ -89,8 +89,9 @@ const StyledSidebar = styled.div`
 `;
 const StyledChatListWrapper = styled.div`
   position: relative;
-  overflow-y: revert;
-  height: calc(100vh - 330px);
+  overflow-y: overlay;
+  overflow-x: hidden;
+  height: calc(100vh - 350px);
 `;
 
 const StyledIconsContainer = styled.div`
@@ -103,6 +104,7 @@ const StyledAssetWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   gap: 20px;
 `;
 const StyledBottomNavigationContainer = styled.div`

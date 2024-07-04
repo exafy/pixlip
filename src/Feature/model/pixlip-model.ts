@@ -1,11 +1,21 @@
 import { pixlipApiService } from "./api-service";
 
 export const newUser = "deviceId";
+export const isPopulated = "isPopulated";
+
 export const setDeviceId = (deviceId: number) => {
   localStorage.setItem(newUser, JSON.stringify(deviceId));
 };
 export const getDeviceId = (): number | null => {
   return JSON.parse(localStorage.getItem(newUser) ?? "null");
+};
+
+export const getNewUserChatStatus = (): boolean | null => {
+  return JSON.parse(localStorage.getItem(isPopulated) ?? "null");
+};
+
+export const setNewUserChatStatus = (isPopulated: boolean) => {
+  localStorage.setItem(newUser, JSON.stringify(isPopulated));
 };
 
 export const generatDeviceId = () => {
@@ -37,7 +47,7 @@ export const resumeConversation = async (message: string, id: number) => {
   const body = {
     conversation_id: id,
     question: message,
-    device_id: generatDeviceId(),
+    device_id: getDeviceId(),
   };
 
   const response = await pixlipApiService.post("/chat/chat-data/", body);

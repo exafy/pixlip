@@ -56,7 +56,8 @@ export const SendFirstMessageCard = ({
         <TypingAreaContainer
           {...props}
           ref={textareaRef}
-          placeholder="Type here or click mic to talk with me..."
+          placeholder="Let us know what type of booth you're envisioning (inline, corner, island, etc.) and paste your website URL here. We'll automatically analyze your website, extracting your logo, color palette, fonts, and style and present your initial design, and you can easily customize any element to your liking.
+"
           onChange={(event: any) => {
             setDisableSend(event.target.value === "");
             onChange(event.target.value);

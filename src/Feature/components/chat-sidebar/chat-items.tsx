@@ -19,8 +19,12 @@ export const ChatItem = ({
         onClick?.(id);
       }}
     >
-      <Icon color={active ? "#fff" : "#000"} name="question_answer" />
-      <StyledConversationName active={active}>{name}</StyledConversationName>
+      <StyledColor>
+        <Icon name="question_answer" />
+      </StyledColor>
+      <StyledConversationName className="names" active={active}>
+        {name}
+      </StyledConversationName>
     </StyledListItem>
   );
 };
@@ -34,13 +38,26 @@ const StyledListItem = styled.div<ChatProps>`
   align-items: center;
   cursor: pointer;
   border-radius: 5px;
-  width: 220px;
-  height: 25px;
+  width: 205px;
+  height: 24px;
   padding: 5px;
-  background-color: ${(props) => (props.active ? "#000" : "#fff")};
+  gap: 8px;
+  transition: 0.4s;
+  &:hover {
+    background-color: #000;
+    .names {
+      color: #fff;
+    }
+    div {
+      .material-icons-round {
+        color: #fff;
+      }
+    }
+  }
+  border: 1px solid ${(props) => (props.active ? "#000" : "#fff")};
 `;
 const StyledConversationName = styled.div<ChatProps>`
-  color: ${(props) => (props.active ? "#fff" : "#000")};
+  color: #000;
   text-align: left;
   font-family: Roboto;
   font-size: 12px;
@@ -52,4 +69,10 @@ const StyledConversationName = styled.div<ChatProps>`
   line-height: normal;
   margin-left: 10px;
   text-overflow: ellipsis;
+`;
+
+const StyledColor = styled.div`
+  .material-icons-round {
+    color: #000;
+  }
 `;
