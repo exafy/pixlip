@@ -29,14 +29,15 @@ export const generatDeviceId = () => {
     hash = (hash << 5) - hash + char;
     hash |= 0;
   }
+  setDeviceId(hash);
   return hash;
 };
 
-export const startConversation = async (message: string) => {
+export const startConversation = async (message: string, deviceId: number) => {
   const body = {
     conversation_id: -1,
     question: message,
-    device_id: generatDeviceId(),
+    device_id: deviceId,
   };
 
   const response = await pixlipApiService.post("/chat/chat-data/", body);

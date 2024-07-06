@@ -4,16 +4,8 @@ import pixlipLogo from "../../../assets/pixlip_logo_classic.svg";
 import { Button } from "../buttons";
 import { ChatItem } from "./chat-items";
 import english from "../../../assets/language/english.svg";
-import { useEffect, useState } from "react";
-import { getAllConversationList, getDeviceId } from "../../model/pixlip-model";
 import { useNavigate } from "react-router-dom";
-const chatItems = [
-  { id: 1, name: "Brainstorming tradeshow bo..." },
-  { id: 2, name: "Brainstorming tradeshow bo..." },
-  { id: 3, name: "Brainstorming tradeshow bo..." },
-  { id: 4, name: "Brainstorming tradeshow bo..." },
-  { id: 5, name: "Brainstorming tradeshow bo..." },
-];
+
 interface SidebarProps {
   onClick: (id: number) => void;
   onNewChat: () => void;
@@ -92,6 +84,7 @@ const StyledChatListWrapper = styled.div`
   overflow-y: overlay;
   overflow-x: hidden;
   height: calc(100vh - 350px);
+  &::scroll-bar{}
 `;
 
 const StyledIconsContainer = styled.div`

@@ -30,14 +30,16 @@ export const StartConversation = ({
   };
   const sendMessageFirstTime = async (value: string) => {
     try {
-      const data = await startConversation(value as string);
       const checkIdExist = getDeviceId();
       if (!checkIdExist) {
         const deviceId = generatDeviceId();
+        const data = await startConversation(value, deviceId);
         setDeviceId(deviceId);
-        setNewUserChatStatus(true);
+        navigate(`/conversation/${data?.details?.conversation_id}`);
+      } else {
+        const data = await startConversation(value, checkIdExist);
+        navigate(`/conversation/${data?.details?.conversation_id}`);
       }
-      navigate(`/conversation/${data?.details?.conversation_id}`);
     } catch (e) {}
   };
   return (
