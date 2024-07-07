@@ -11,6 +11,7 @@ import {
   startConversation,
 } from "../model/pixlip-model";
 import { useState } from "react";
+import { TypeAnimation } from "react-type-animation";
 const defaultMessage = [
   { id: 1, message: "Show me what PIXLIP AI can do" },
   { id: 2, message: "I need help designing my booth" },
@@ -47,7 +48,20 @@ export const StartConversation = ({
       {enabledHeadings && (
         <>
           <ConfiguratorLogo height="200px" width="200px" />
-          <StyledHeadingText>Welcome, this is PIXLIP AI</StyledHeadingText>
+          <StyledHeadingText>
+            <TypeAnimation
+              sequence={["Welcome, this is PIXLIP AI", 1000]}
+              wrapper="div"
+              speed={50}
+              cursor={false}
+              style={{
+                fontSize: "50px",
+                display: "inline-block",
+                fontFamily: "Roboto",
+                textAlign: "center",
+              }}
+            />
+          </StyledHeadingText>
         </>
       )}
       <SendFirstMessageCard

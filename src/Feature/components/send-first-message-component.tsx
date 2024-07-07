@@ -117,6 +117,22 @@ const TypingAreaContainer = styled.textarea`
     font-style: italic;
     font-weight: 100;
   }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
 `;
 const ActionButtonContainer = styled.div`
   display: flex;

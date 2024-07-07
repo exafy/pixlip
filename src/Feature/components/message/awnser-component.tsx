@@ -27,7 +27,6 @@ export const Awnser = ({
           onClick={() => {
             onClick?.();
           }}
-          
         >
           {buttonText}
         </Button>

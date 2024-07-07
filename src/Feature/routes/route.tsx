@@ -1,17 +1,15 @@
-import { createBrowserRouter } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { PageLayout } from "../layout/page-layout";
-import StartConversation from "../page/start-conversation";
+import { WelcomePage } from "../page/welcome-page";
 import { ConversationListPage } from "../page/conversations-list-page";
 import { GoConfigurator } from "../page/go-configurator";
-import { WelcomePage } from "../page/welcome-page";
 
 const routes = [
   {
     path: "/",
     element: (
       <PageLayout>
-        <WelcomePage></WelcomePage>
+        <WelcomePage />
       </PageLayout>
     ),
   },
@@ -19,20 +17,19 @@ const routes = [
     path: "/conversation/:id",
     element: (
       <PageLayout>
-        <ConversationListPage></ConversationListPage>
+        <ConversationListPage />
       </PageLayout>
     ),
   },
-
   {
     path: "/configurator",
     element: (
       <PageLayout>
-        <GoConfigurator></GoConfigurator>
+        <GoConfigurator />
       </PageLayout>
     ),
   },
-  { path: "*", element: <Navigate to="/" /> },
+  { path: "*", element: <Navigate to="/conversation/-1" /> },
 ];
 
 const appRouter = createBrowserRouter(routes);

@@ -118,7 +118,7 @@ const TypingAreaContainer = styled.textarea`
   transition: 0.4s;
   resize: none;
   position: relative;
-  overflow-y: overlay;
+  overflow-y: auto;
   overflow-x: hidden;
   min-height: 20px;
   max-height: 200px;
