@@ -3,33 +3,41 @@ import { PageLayout } from "../layout/page-layout";
 import { WelcomePage } from "../page/welcome-page";
 import { ConversationListPage } from "../page/conversations-list-page";
 import { GoConfigurator } from "../page/go-configurator";
+import { ProtectedRoute } from "../auth/auth-guard";
+import UnProtectedRoute from "../auth/no-auth-guard";
 
 const routes = [
   {
     path: "/",
     element: (
-      <PageLayout>
-        <WelcomePage />
-      </PageLayout>
+      <UnProtectedRoute>
+        <PageLayout>
+          <WelcomePage />
+        </PageLayout>
+      </UnProtectedRoute>
     ),
   },
   {
     path: "/conversation/:id",
     element: (
-      <PageLayout>
-        <ConversationListPage />
-      </PageLayout>
+      <ProtectedRoute>
+        <PageLayout>
+          <ConversationListPage />
+        </PageLayout>
+      </ProtectedRoute>
     ),
   },
   {
     path: "/configurator",
     element: (
-      <PageLayout>
-        <GoConfigurator />
-      </PageLayout>
+      <ProtectedRoute>
+        <PageLayout>
+          <GoConfigurator />
+        </PageLayout>
+      </ProtectedRoute>
     ),
   },
-  { path: "*", element: <Navigate to="/conversation/-1" /> },
+  { path: "*", element: <Navigate to="/" /> },
 ];
 
 const appRouter = createBrowserRouter(routes);

@@ -9,15 +9,17 @@ interface UnProtectedRouteProps {
 export const UnProtectedRoute: React.FC<UnProtectedRouteProps> = ({
   children,
 }) => {
-  const [token, setToken] = useState<number | null>(null);
+        const deviceId = getDeviceId();
 
-  useEffect(() => {
-    const fetchToken = async () => {
-      const deviceId = getDeviceId(); // Ensure this is an async call
-      setToken(deviceId); // Assuming deviceId is a number
-    };
-    fetchToken();
-  }, []);
+        const [token, setToken] = useState<number | null>(deviceId);
+        useEffect(() => {
+          const fetchToken = async () => {
+            if (deviceId) {
+              setToken(deviceId);
+            }
+          };
+          fetchToken();
+        }, []);
 
   if (token) {
     return <Navigate to="/conversation/-1" replace />;

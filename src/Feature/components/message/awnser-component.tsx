@@ -23,7 +23,7 @@ export const Awnser = ({
       <TypeAnimation
         splitter={(str) => str.split(/(?= )/)}
         sequence={[awnser, 2500]}
-        omitDeletionAnimation={true}
+        omitDeletionAnimation={false}
         wrapper="div"
         cursor={false}
         repeat={Infinity}

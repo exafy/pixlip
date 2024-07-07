@@ -12,12 +12,15 @@ interface ProtectedRouteProps {
 }
 
 export const ProtectedRoute = ({ children }: PropsWithChildren) => {
-  const [token, setToken] = useState<number | null>(null);
+  const deviceId = getDeviceId(); // Ensure this is an async call
+
+  const [token, setToken] = useState<number | null>(deviceId);
 
   useEffect(() => {
     const fetchToken = async () => {
-      const deviceId = getDeviceId(); // Ensure this is an async call
-      setToken(deviceId); // Assuming deviceId is a number
+      if (deviceId) {
+        setToken(deviceId); // Assuming deviceId is a number
+      }
     };
     fetchToken();
   }, []);
