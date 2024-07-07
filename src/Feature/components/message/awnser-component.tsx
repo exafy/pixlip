@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { Icon } from "../icon";
 import { Button } from "../buttons";
+import { TypeAnimation } from "react-type-animation";
 interface AwnserProps {
   awnser: string;
   type?: "text" | "button";
@@ -19,7 +20,28 @@ export const Awnser = ({
         <Icon name="message" size="xxl-large" />
         <StyledAwnserText>Answer</StyledAwnserText>
       </StyledAwnserIcon>
-      <StyledAnswer>{awnser}</StyledAnswer>
+      <TypeAnimation
+        splitter={(str) => str.split(/(?= )/)}
+        sequence={[awnser, 2500]}
+        omitDeletionAnimation={true}
+        wrapper="div"
+        cursor={false}
+        repeat={Infinity}
+        style={{
+          color: "#000",
+          display: "flex",
+          fontFamily: "Roboto",
+          fontSize: "14px",
+          fontStyle: "normal",
+          fontWeight: 400,
+          lineHeight: "normal",
+          letterSpacing: " -0.28px",
+          marginBottom: "10px",
+          marginTop: "30px",
+        }}
+      />
+
+      {/* <StyledAnswer>{awnser}</StyledAnswer> */}
       {type === "button" && (
         <Button
           width="154px"

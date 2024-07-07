@@ -15,6 +15,7 @@ import {
 } from "../model/pixlip-model";
 import { SendFirstMessageCard } from "../components/send-first-message-component";
 import StartConversation from "./start-conversation";
+import { Global, css } from "@emotion/react";
 
 const StyledConversationLayout = styled.div`
   display: flex;
