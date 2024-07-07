@@ -44,12 +44,12 @@ export const Sidebar = ({
           + New chat
         </Button>
         <StyledChatListWrapper>
-          {allChats?.details.map((data: any) => {
+          {allChats?.details.map((data: any, index: number) => {
             const isActive = data.conversation_id === activeItem;
             return (
               <ChatItem
                 active={isActive}
-                key={data.chat_history.data[0].question}
+                key={data.chat_history.data[0].question + index}
                 name={data.chat_history.data[0].question}
                 id={data.conversation_id}
                 onClick={(id) => onClick(id)}
@@ -84,7 +84,22 @@ const StyledChatListWrapper = styled.div`
   overflow-y: overlay;
   overflow-x: hidden;
   height: calc(100vh - 350px);
-  &::scroll-bar{}
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+  }
 `;
 
 const StyledIconsContainer = styled.div`

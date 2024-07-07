@@ -77,13 +77,16 @@ export const ConversationListPage = () => {
   const { id } = useParams();
   const idInt = parseInt(id as string);
   useEffect(() => {
-    handleOpenedChat(idInt);
+    if (idInt > 1) {
+      handleOpenedChat(idInt);
+    }
   }, [idInt]);
 
   const handleAllChats = async () => {
     try {
       const data = await getAllConversationList(getDeviceId() as number);
-      setChatitem(data);
+      setChatitem(() => data);
+      console.log(data);
     } catch (e) {}
   };
   useEffect(() => {
