@@ -31,6 +31,7 @@ export const Sidebar = ({
               window.open("https://www.pixlip.com/en/");
             }}
             src={pixlipLogo}
+            style={{ cursor: "pointer" }}
             alt=""
           />
           <ConfiguratorLogo height="100px" width="100px" />
