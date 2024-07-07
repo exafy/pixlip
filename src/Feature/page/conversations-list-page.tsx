@@ -24,10 +24,9 @@ const StyledConversationLayout = styled.div`
 const StyledContentArea = styled.div`
   display: flex;
   width: calc(100vw - 260px);
-  height: calc(100vh - 120px);
+  height: calc(100vh - 145px);
   flex-direction: column;
   right: 0;
-  bottom: 120px;
   overflow-y: scroll;
   position: absolute;
   &::-webkit-scrollbar {
