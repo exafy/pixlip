@@ -29,6 +29,22 @@ const StyledContentArea = styled.div`
   bottom: 120px;
   overflow-y: scroll;
   position: absolute;
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #000;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
 `;
 
 const StyledContentAreaNewChat = styled.div`
