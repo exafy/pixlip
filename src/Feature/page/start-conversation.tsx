@@ -7,16 +7,15 @@ import {
   generatDeviceId,
   getDeviceId,
   setDeviceId,
-  setNewUserChatStatus,
   startConversation,
 } from "../model/pixlip-model";
 import { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
 const defaultMessage = [
-  { id: 1, message: "Show me what PIXLIP AI can do" },
-  { id: 2, message: "I need help designing my booth" },
-  { id: 3, message: "How can PIXLIP enhance my booth design" },
-  { id: 4, message: "What is the shipping cost" },
+  { id: 1, message: "Let's design a booth together" },
+  { id: 2, message: "Show me booth designs" },
+  { id: 3, message: "Best booth design for my company" },
+  { id: 4, message: "Recommend PIXLIP products for my event" },
 ];
 interface StartConversationProps {
   enabledHeadings?: boolean;

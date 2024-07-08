@@ -13,9 +13,9 @@ import {
   getSelectedChatData,
   resumeConversation,
 } from "../model/pixlip-model";
-import { SendFirstMessageCard } from "../components/send-first-message-component";
 import StartConversation from "./start-conversation";
-import { Global, css } from "@emotion/react";
+import mediaPlaceHolder from "../../assets/media-placeholder.svg";
+import { ShimmerText } from "shimmer-effects-react";
 
 const StyledConversationLayout = styled.div`
   display: flex;
@@ -84,9 +84,12 @@ const formatText = (text: string) => {
 export const ConversationListPage = () => {
   const [open, setOpen] = useState(false);
   const [opendChat, setOpenedChat] = useState<any>(false);
+  const [isAnimated, setIsAnimated] = useState<any>(false);
+
   const [message, setMessage] = useState<string>("");
   const [typed, setTyped] = useState<string>("");
   const [chatItems, setChatitem] = useState<any>();
+  const [shimmer, setShummer] = useState<boolean | null>(null);
 
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -108,27 +111,36 @@ export const ConversationListPage = () => {
   useEffect(() => {
     handleAllChats();
   }, [idInt]);
-  useEffect(() => {
+  const scrollToBottom = () => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [opendChat]);
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [opendChat, shimmer]);
   const handleOpenedChat = async (id: number) => {
     try {
       const data = await getSelectedChatData(id);
       setOpenedChat(data);
-      navigate("");
+      setIsAnimated(false);
     } catch (e) {}
   };
   const handleResumeConversation = async (message: string) => {
     try {
       setTyped(message);
+      setShummer(true);
       const data = await resumeConversation(message, idInt);
+      setIsAnimated(true);
       setOpenedChat(data);
+      setShummer(false);
       setMessage("");
       setTyped("");
-    } catch {}
+    } catch {
+      setIsAnimated(false);
+      setShummer(false);
+    }
   };
 
   return (
@@ -157,10 +169,22 @@ export const ConversationListPage = () => {
                 >
                   <Question>{chat?.question}</Question>
                   <Awnser
+                    media={mediaPlaceHolder}
+                    isAnimated={
+                      opendChat?.details?.chat_history?.data?.length - 1 ===
+                      index
+                        ? isAnimated
+                        : false
+                    }
                     type="text"
                     buttonText="Configurator"
                     awnser={chat?.response["Entire Answer"]}
                   />
+                  {shimmer &&
+                    opendChat?.details?.chat_history?.data?.length - 1 ===
+                      index && (
+                      <StyledShimmerEffect mode="dark" line={4} gap={6} />
+                    )}
                 </StyledChatViewContainer>
               )
             )}
@@ -194,3 +218,7 @@ export const ConversationListPage = () => {
     </>
   );
 };
+
+const StyledShimmerEffect = styled(ShimmerText)`
+  margin-top: 20px;
+`;

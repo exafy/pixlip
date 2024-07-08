@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Slider } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ColorCircle } from "../color-circle";
 import { Button } from "../buttons";
 import { CardComponentOutline } from "../card-component";
@@ -25,12 +25,14 @@ export const ConfiguratorControls = ({
       value: 2,
     },
     {
-      value: 3,
+      value: 2.25,
     },
     {
       value: 4,
     },
   ];
+
+  useEffect(() => {}, []);
 
   const Colors = [
     { color: "#FFFFFF", isActive: false },
@@ -92,13 +94,17 @@ export const ConfiguratorControls = ({
       <StyledControlHeading>Height: 2 meters</StyledControlHeading>
       <StyledSlider>
         <Slider
-          defaultValue={1}
-          color="primary"
           aria-label="Default"
+          defaultValue={2}
           valueLabelDisplay="auto"
-          marks={marks}
+          shiftStep={1}
+          step={0.25}
+          marks
+          min={2}
           max={2.5}
-          min={1}
+          onChange={(event: any) => {
+            console.log(event);
+          }}
         />
       </StyledSlider>
       <StyledControlHeading>Wall</StyledControlHeading>

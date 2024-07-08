@@ -115,14 +115,13 @@ const TypingAreaContainer = styled.textarea`
   &::placeholder {
     color: #9f9f9f;
     font-style: italic;
-    font-weight: 100;
   }
   &::-webkit-scrollbar {
     width: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #000;
+    background-color: #e5e5e5;
     border-radius: 4px;
   }
 

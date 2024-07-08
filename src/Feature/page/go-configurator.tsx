@@ -20,7 +20,7 @@ export const GoConfigurator = () => {
           height={dimensions.height}
           width={dimensions.width}
           length={dimensions.length}
-          numberOfWall={2}
+          numberOfWall={1}
         />
         <ConfiguratorConversationBox />
       </StyledConfiguratorSidePanel>

@@ -90,7 +90,7 @@ const StyledChatListWrapper = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #000;
+    background-color: #e5e5e5;
     border-radius: 4px;
   }
 
