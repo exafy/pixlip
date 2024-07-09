@@ -32,7 +32,7 @@ const routes = [
     element: (
       <ProtectedRoute>
         <PageLayout>
-          <GoConfigurator />
+          <GoConfigurator data={{}} />
         </PageLayout>
       </ProtectedRoute>
     ),

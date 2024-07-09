@@ -6,6 +6,7 @@ interface TypingAreaProps {
   onSubmit: () => void;
   value?: string;
 }
+ 
 export const TypingArea = ({ onChange, onSubmit, value }: TypingAreaProps) => {
   const textareaRef = useRef(null);
   const [disableSend, setDisableSend] = useState(true);

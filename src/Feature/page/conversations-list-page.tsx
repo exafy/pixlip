@@ -162,7 +162,7 @@ export const ConversationListPage = () => {
             {opendChat?.details?.chat_history?.data.map(
               (chat: any, index: number) => (
                 <StyledChatViewContainer
-                  key={chat?.response["Entire Answer"]}
+                  key={chat?.response?.Short_Answer}
                   isDivider={
                     index !== opendChat?.details?.chat_history?.data?.length - 1
                   }
@@ -176,15 +176,34 @@ export const ConversationListPage = () => {
                         ? isAnimated
                         : false
                     }
-                    type="text"
+                    type={
+                      (opendChat?.details?.booth_url?.data
+                        ?.length as number) === undefined
+                        ? "text"
+                        : "button"
+                    }
                     buttonText="Configurator"
-                    awnser={chat?.response["Entire Answer"]}
+                    awnser={chat?.response?.Short_Answer}
+                    onClick={() => {
+                      setOpen(true);
+                    }}
                   />
                   {shimmer &&
                     opendChat?.details?.chat_history?.data?.length - 1 ===
                       index && (
-                      <StyledShimmerEffect mode="dark" line={4} gap={6} />
+                      <StyledShimmerWrapper>
+                        <StyledText>Analyzing your request...</StyledText>
+                        <StyledShimmerEffect mode="light" line={4} gap={6} />
+                      </StyledShimmerWrapper>
                     )}
+                  <ConfiguratorDialog
+                    onClose={() => {
+                      setOpen(true);
+                    }}
+                    key={"ahsan"}
+                    openConfigutrator={open}
+                    children={<GoConfigurator data={opendChat?.details} />}
+                  />
                 </StyledChatViewContainer>
               )
             )}
@@ -207,18 +226,25 @@ export const ConversationListPage = () => {
           value={message}
         />
       )}
-      <ConfiguratorDialog
-        onClose={() => {
-          setOpen(false);
-        }}
-        key={"ahsan"}
-        openConfigutrator={open}
-        children={<GoConfigurator />}
-      />
     </>
   );
 };
 
 const StyledShimmerEffect = styled(ShimmerText)`
   margin-top: 20px;
+`;
+const StyledText = styled.div`
+  color: #000;
+  display: flex;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.28px;
+  margin-bottom: 10px;
+  margin-top: 30px;
+`;
+const StyledShimmerWrapper = styled.div`
+  border-top: 1px solid #000;
 `;

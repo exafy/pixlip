@@ -96,6 +96,7 @@ const StyledAnswer = styled.div`
   letter-spacing: -0.28px;
   margin-bottom: 10px;
   margin-top: 30px;
+  width: calc(100vw - 700px);
 `;
 const StyledAwnserText = styled.div`
   color: #141414;

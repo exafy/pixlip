@@ -6,33 +6,22 @@ import { Button } from "../buttons";
 import { CardComponentOutline } from "../card-component";
 import { TabComponent } from "../tabs";
 interface ConfiguratorProps {
-  onControlChange: () => void;
+  onControlChange: (data: any) => void;
 }
 export const ConfiguratorControls = ({
   onControlChange,
 }: ConfiguratorProps) => {
-  const [activeWall, setActiveWall] = useState<number | null>(2);
-  const [activeCounter, setActiveCounter] = useState<number | null>(1);
   const [configuratorControls, setConfiguratorControls] = useState({
-    height: 4,
-    width: 12,
-    length: 12,
+    height: 2,
+    width: 3,
+    length: 3,
     noOfWalls: 2,
     noOfCounters: 1,
   });
-  const marks = [
-    {
-      value: 2,
-    },
-    {
-      value: 2.25,
-    },
-    {
-      value: 4,
-    },
-  ];
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    onControlChange?.(configuratorControls);
+  }, [configuratorControls]);
 
   const Colors = [
     { color: "#FFFFFF", isActive: false },
@@ -55,14 +44,6 @@ export const ConfiguratorControls = ({
     { id: 2, message: "DM Sans" },
   ];
 
-  const handleWallClick = (id: number) => {
-    setActiveWall(id);
-  };
-
-  const handleCounterClick = (id: number) => {
-    setActiveCounter(id);
-  };
-
   return (
     <StyledConfiguratorControls>
       <StyledHeading>GO Configurator</StyledHeading>
@@ -77,6 +58,12 @@ export const ConfiguratorControls = ({
           min={1}
           max={12}
           step={1}
+          onChange={(event: any) => {
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              length: event.target.value,
+            }));
+          }}
         />
       </StyledSlider>
       <StyledControlHeading>Width: 6 meters</StyledControlHeading>
@@ -89,6 +76,12 @@ export const ConfiguratorControls = ({
           min={1}
           max={12}
           step={1}
+          onChange={(event: any) => {
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              width: event.target.value,
+            }));
+          }}
         />
       </StyledSlider>
       <StyledControlHeading>Height: 2 meters</StyledControlHeading>
@@ -103,7 +96,11 @@ export const ConfiguratorControls = ({
           min={2}
           max={2.5}
           onChange={(event: any) => {
-            console.log(event);
+            console.log(event.target.value);
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              height: event.target.value,
+            }));
           }}
         />
       </StyledSlider>
@@ -111,36 +108,61 @@ export const ConfiguratorControls = ({
       <StyledTabs>
         <TabComponent
           id={1}
-          isActive={activeWall === 1}
+          isActive={configuratorControls.noOfWalls === 1}
           text="Head Stand"
-          onClick={() => handleWallClick(1)}
+          onClick={() => {
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              noOfWalls: 1,
+            }));
+          }}
         />
         <TabComponent
           id={2}
-          isActive={activeWall === 2}
+          isActive={configuratorControls.noOfWalls === 2}
           text="Corner Stand"
-          onClick={() => handleWallClick(2)}
+          onClick={() => {
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              noOfWalls: 2,
+            }));
+          }}
         />
         <TabComponent
           id={3}
-          isActive={activeWall === 3}
+          isActive={configuratorControls.noOfWalls === 3}
           text="Inline Stand"
-          onClick={() => handleWallClick(3)}
+          onClick={() => {
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              noOfWalls: 3,
+            }));
+          }}
         />
       </StyledTabs>
       <StyledControlHeading>Counter</StyledControlHeading>
       <StyledTabs>
         <TabComponent
           id={1}
-          isActive={activeCounter === 1}
+          isActive={configuratorControls.noOfCounters === 1}
           text="Single Counter"
-          onClick={() => handleCounterClick(1)}
+          onClick={() => {
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              noOfCounters: 1,
+            }));
+          }}
         />
         <TabComponent
           id={2}
-          isActive={activeCounter === 2}
+          isActive={configuratorControls.noOfCounters === 2}
           text="Two Counters"
-          onClick={() => handleCounterClick(2)}
+          onClick={() => {
+            setConfiguratorControls((prevData) => ({
+              ...prevData,
+              noOfCounters: 2,
+            }));
+          }}
         />
       </StyledTabs>
 
@@ -185,6 +207,26 @@ const StyledConfiguratorControls = styled.div`
   height: calc(100vh - 40px);
   gap: 10px;
   align-items: center;
+  &::placeholder {
+    color: #9f9f9f;
+    font-style: italic;
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #e5e5e5;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
 `;
 
 const StyledHeading = styled.div`

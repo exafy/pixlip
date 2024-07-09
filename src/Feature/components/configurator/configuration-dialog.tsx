@@ -11,6 +11,7 @@ export const ConfiguratorDialog = ({
   onClose,
   children,
 }: ConfiguratorProps) => {
+
   const [open, setOpen] = useState(openConfigutrator);
   useEffect(() => {
     setOpen(openConfigutrator);
