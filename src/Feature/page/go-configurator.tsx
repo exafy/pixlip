@@ -92,8 +92,8 @@ export const GoConfigurator = ({ data }: ConfiguratorProps) => {
           numberOfWall={dimensions.noOfWalls}
           numberOfCounter={dimensions.noOfCounters}
           wallImage={
-            (data?.booth_url?.data[1].image_path as string)
-              ? `https://backend.exafy.io/${data?.booth_url?.data[1].image_path}`
+            (data?.booth_url?.data[1]?.image_path as string)
+              ? `https://backend.exafy.io/${data?.booth_url?.data[1]?.image_path}`
               : null
           }
         />
