@@ -10,8 +10,8 @@ interface ColorInterface {
   color: string;
 }
 const StyledCircleColor = styled.div<ColorInterface>`
-  width: 49px;
-  height: 49px;
+  width: 36px;
+  height: 36px;
   display: flex;
   border-radius: 50%;
   background-color: ${(props) => (props.color ? props.color : "#ffffff")};

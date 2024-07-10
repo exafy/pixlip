@@ -11,6 +11,8 @@ import {
 } from "../model/pixlip-model";
 import { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
+import { Icon } from "../components/icon";
+import { CircularIndeterminate } from "../components/loader-component";
 const defaultMessage = [
   { id: 1, message: "Let's design a booth together" },
   { id: 2, message: "Show me booth designs" },
@@ -19,11 +21,15 @@ const defaultMessage = [
 ];
 interface StartConversationProps {
   enabledHeadings?: boolean;
+  onPlay?: () => void;
 }
 export const StartConversation = ({
   enabledHeadings = true,
+  onPlay,
 }: StartConversationProps) => {
   const [message, setMessage] = useState<string | null>(null);
+  const [showLoader, setShowLoader] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const handleStartConversation = async () => {
     await sendMessageFirstTime(message as string);
@@ -31,16 +37,21 @@ export const StartConversation = ({
   const sendMessageFirstTime = async (value: string) => {
     try {
       const checkIdExist = getDeviceId();
+      setShowLoader(true);
       if (!checkIdExist) {
         const deviceId = generatDeviceId();
         const data = await startConversation(value, deviceId);
         setDeviceId(deviceId);
+        setShowLoader(false);
         navigate(`/conversation/${data?.details?.conversation_id}`);
       } else {
         const data = await startConversation(value, checkIdExist);
         navigate(`/conversation/${data?.details?.conversation_id}`);
+        setShowLoader(false);
       }
-    } catch (e) {}
+    } catch (e) {
+      setShowLoader(false);
+    }
   };
   return (
     <>
@@ -60,7 +71,11 @@ export const StartConversation = ({
                 textAlign: "center",
               }}
             />
+            <StyledIcon>
+              <Icon name="campaign" onClick={() => onPlay?.()} />
+            </StyledIcon>
           </StyledHeadingText>
+          {showLoader && <CircularIndeterminate />}
         </>
       )}
       <SendFirstMessageCard
@@ -118,4 +133,7 @@ const OptionCardContainer = styled.div`
   grid-template-rows: repeat(2, 1fr);
   gap: 10px;
   width: calc(100vw - 640px);
+`;
+const StyledIcon = styled.div`
+  margin-left: 20px;
 `;

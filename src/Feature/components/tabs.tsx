@@ -26,6 +26,7 @@ const StyledTab = styled.div<TabActiveInterface>`
   height: fit-content;
   width: fit-content;
   align-items: center;
+  cursor: pointer;
   border-bottom: 3px solid ${(props) => (props.isActive ? "#000" : "#fff")};
 `;
 const TabText = styled.div<TabActiveInterface>`

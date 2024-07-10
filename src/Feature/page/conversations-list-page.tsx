@@ -16,6 +16,8 @@ import {
 import StartConversation from "./start-conversation";
 import mediaPlaceHolder from "../../assets/media-placeholder.svg";
 import { ShimmerText } from "shimmer-effects-react";
+import PlaySingleAudioOnLoad from "../components/auido-player";
+import PlaySingleAudioOnConversationLoad from "../components/audio-conversation";
 
 const StyledConversationLayout = styled.div`
   display: flex;
@@ -34,7 +36,7 @@ const StyledContentArea = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #000;
+    background-color: #e5e5e5;
     border-radius: 4px;
   }
 
@@ -105,7 +107,6 @@ export const ConversationListPage = () => {
     try {
       const data = await getAllConversationList(getDeviceId() as number);
       setChatitem(() => data);
-      console.log(data);
     } catch (e) {}
   };
   useEffect(() => {
@@ -159,6 +160,11 @@ export const ConversationListPage = () => {
         />
         {idInt > 1 && (
           <StyledContentArea ref={chatContainerRef}>
+            {opendChat?.details?.audio_file && (
+              <PlaySingleAudioOnConversationLoad
+                src={`https://backend.exafy.io/${opendChat?.details?.audio_file}`}
+              />
+            )}
             {opendChat?.details?.chat_history?.data.map(
               (chat: any, index: number) => (
                 <StyledChatViewContainer
@@ -198,7 +204,7 @@ export const ConversationListPage = () => {
                     )}
                   <ConfiguratorDialog
                     onClose={() => {
-                      setOpen(true);
+                      setOpen(false);
                     }}
                     key={"ahsan"}
                     openConfigutrator={open}
@@ -237,7 +243,7 @@ const StyledText = styled.div`
   color: #000;
   display: flex;
   font-family: Roboto;
-  font-size: 14px;
+  font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -246,5 +252,6 @@ const StyledText = styled.div`
   margin-top: 30px;
 `;
 const StyledShimmerWrapper = styled.div`
-  border-top: 1px solid #000;
+  margin-top: 20px;
+  border-top: 1px solid #9f9f9f;
 `;

@@ -58,7 +58,6 @@ export const TypingArea = ({ onChange, onSubmit, value }: TypingAreaProps) => {
         <TypingAreaContainer
           ref={textareaRef}
           onChange={(event: any) => {
-            console.log(event);
             setDisableSend(event.target.value === "");
             onChange(event.target.value);
             setValues(event.target.value);

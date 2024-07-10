@@ -1,20 +1,17 @@
 import styled from "@emotion/styled";
-import { CardComponent } from "../components/card-component";
-import { SendFirstMessageCard } from "../components/send-first-message-component";
-import { ConfiguratorLogo } from "../components/widget-icon";
-import { useNavigate } from "react-router-dom";
-import {
-  generatDeviceId,
-  getDeviceId,
-  setDeviceId,
-  setNewUserChatStatus,
-  startConversation,
-} from "../model/pixlip-model";
 import StartConversation from "./start-conversation";
+import PlaySingleAudioOnLoad from "../components/auido-player";
+import { useState } from "react";
 export const WelcomePage = () => {
+  const [play, setPlay] = useState<boolean>(false);
   return (
     <StyledStartConversationContainer>
-      <StartConversation />
+      <StartConversation
+        onPlay={() => {
+          setPlay(true);
+        }}
+      />
+      <PlaySingleAudioOnLoad play={play} />
     </StyledStartConversationContainer>
   );
 };

@@ -38,7 +38,7 @@ const StyledButtonBorder = styled.button<buttonPropetiesProp>`
   font-weight: 400;
   line-height: normal;
   border-radius: 20px;
-  padding: 10px;
+  padding: 12px;
   background: #ffffff;
   cursor: pointer;
   transition: 0.4s;
@@ -60,7 +60,7 @@ const StyledButtonFilled = styled.button<buttonPropetiesProp>`
   line-height: normal;
   background: #000000;
   border-radius: 20px;
-  padding: 10px;
+  padding: 12px;
   cursor: pointer;
   transition: 0.4s;
   border: 1px solid #000;

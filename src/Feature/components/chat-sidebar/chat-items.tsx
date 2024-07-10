@@ -38,9 +38,10 @@ const StyledListItem = styled.div<ChatProps>`
   align-items: center;
   cursor: pointer;
   border-radius: 5px;
-  width: 205px;
+  width: 200px;
   height: 24px;
   padding: 5px;
+  margin-right: 10px;
   gap: 8px;
   transition: 0.4s;
   &:hover {

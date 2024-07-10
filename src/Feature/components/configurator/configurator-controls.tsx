@@ -13,8 +13,8 @@ export const ConfiguratorControls = ({
 }: ConfiguratorProps) => {
   const [configuratorControls, setConfiguratorControls] = useState({
     height: 2,
-    width: 3,
-    length: 3,
+    width: 6,
+    length: 6,
     noOfWalls: 2,
     noOfCounters: 1,
   });
@@ -33,10 +33,8 @@ export const ConfiguratorControls = ({
   ];
 
   const slogans = [
-    { id: 1, message: "Show me what PIXLIP AI can do" },
-    { id: 2, message: "I need help designing my booth" },
-    { id: 3, message: "How can PIXLIP enhance my booth design" },
-    { id: 4, message: "What is the shipping cost" },
+    { id: 1, message: "Join the new era of productivity!" },
+    { id: 2, message: "Create Once – Integrate Anywhere" },
   ];
 
   const typography = [
@@ -47,8 +45,9 @@ export const ConfiguratorControls = ({
   return (
     <StyledConfiguratorControls>
       <StyledHeading>GO Configurator</StyledHeading>
+      <div style={{ marginBottom: "30px" }} />
       <StyledSmallHeading>Shape your booth</StyledSmallHeading>
-      <StyledControlHeading>Length: 6 meters</StyledControlHeading>
+      <StyledControlHeading>{`Length: ${configuratorControls.length} meters`}</StyledControlHeading>
       <StyledSlider>
         <Slider
           defaultValue={6}
@@ -66,7 +65,7 @@ export const ConfiguratorControls = ({
           }}
         />
       </StyledSlider>
-      <StyledControlHeading>Width: 6 meters</StyledControlHeading>
+      <StyledControlHeading>{`Width: ${configuratorControls.width} meters`}</StyledControlHeading>
       <StyledSlider>
         <Slider
           defaultValue={6}
@@ -84,7 +83,7 @@ export const ConfiguratorControls = ({
           }}
         />
       </StyledSlider>
-      <StyledControlHeading>Height: 2 meters</StyledControlHeading>
+      <StyledControlHeading>{`Height: ${configuratorControls.height} meters`}</StyledControlHeading>
       <StyledSlider>
         <Slider
           aria-label="Default"
@@ -96,7 +95,6 @@ export const ConfiguratorControls = ({
           min={2}
           max={2.5}
           onChange={(event: any) => {
-            console.log(event.target.value);
             setConfiguratorControls((prevData) => ({
               ...prevData,
               height: event.target.value,
@@ -165,8 +163,8 @@ export const ConfiguratorControls = ({
           }}
         />
       </StyledTabs>
-
-      <StyledHeading>Customize your booth</StyledHeading>
+      <div style={{ marginBottom: "30px" }} />
+      <StyledSmallHeading>Customize your booth</StyledSmallHeading>
       <StyledControlHeading>Color</StyledControlHeading>
       <StyledColorContainer>
         {Colors.map((data) => (
@@ -176,7 +174,11 @@ export const ConfiguratorControls = ({
             key={data.color}
           />
         ))}
-        <Button variant="filled">+ Add logo</Button>
+        <StyledControlButton>
+          <Button width="fit-content" variant="filled">
+            + Add color
+          </Button>{" "}
+        </StyledControlButton>
       </StyledColorContainer>
 
       <StyledControlHeading>Slogans</StyledControlHeading>
@@ -185,19 +187,60 @@ export const ConfiguratorControls = ({
           {data.message}
         </CardComponentOutline>
       ))}
-      <Button variant="filled">+ Add slogan</Button>
+      <StyledControlButton>
+        <Button width="fit-content" variant="filled">
+          + Add slogan
+        </Button>{" "}
+      </StyledControlButton>
+
       <StyledControlHeading>Typography</StyledControlHeading>
       {typography.map((data) => (
         <CardComponentOutline onClick={() => {}} key={data.message}>
           {data.message}
         </CardComponentOutline>
       ))}
-      <Button variant="filled">+ Add Typography</Button>
+      <StyledControlButton>
+        <Button width="fit-content" variant="filled">
+          + Add typography
+        </Button>
+      </StyledControlButton>
+
       <StyledControlHeading>Image</StyledControlHeading>
-      <Button variant="filled">+ Add image</Button>
+      <StyledControlButton>
+        <Button width="fit-content" variant="filled">
+          + Add image
+        </Button>
+      </StyledControlButton>
+      <div style={{ marginBottom: "30px" }} />
+      <StyledSmallHeading>Customize your booth</StyledSmallHeading>
+      <StyledPriceTax>RRP excl. VAT</StyledPriceTax>
+      <StyledSmallPrice>8,840.00€ </StyledSmallPrice>
+      <Button width="fit-content" variant="filled">
+        Add to cart
+      </Button>
     </StyledConfiguratorControls>
   );
 };
+const StyledControlButton = styled.div`
+  button {
+    border: none;
+    background-color: #0071e3;
+  }
+  button:hover {
+    border: 1px solid #0071e3;
+    color: #0071e3;
+  }
+`;
+const StyledPriceTax = styled.div`
+  color: #000;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 16px
+  letter-spacing: 0.8px;
+`;
 
 const StyledConfiguratorControls = styled.div`
   display: flex;
@@ -205,7 +248,8 @@ const StyledConfiguratorControls = styled.div`
   overflow-y: overlay;
   flex-direction: column;
   height: calc(100vh - 40px);
-  gap: 10px;
+  gap: 20px;
+  padding: 0 20px 0 0;
   align-items: center;
   &::placeholder {
     color: #9f9f9f;
@@ -238,7 +282,6 @@ const StyledHeading = styled.div`
   font-weight: 700;
   line-height: 48px;
 `;
-
 const StyledSmallHeading = styled.div`
   color: #171a20;
   text-align: center;
@@ -248,6 +291,15 @@ const StyledSmallHeading = styled.div`
   font-weight: 500;
   line-height: 48px;
 `;
+const StyledSmallPrice = styled.div`
+  color: #171a20;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 36px;
+`;
 
 const StyledControlHeading = styled.div`
   color: #000;
@@ -255,7 +307,7 @@ const StyledControlHeading = styled.div`
   font-family: Roboto;
   font-size: 18px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 20px;
 `;
 
@@ -272,6 +324,7 @@ const StyledTabs = styled.div`
   gap: 10px;
   justify-content: space-between;
   width: 100%;
+  border-bottom: 1px solid #000;
 `;
 
 const StyledColorContainer = styled.div`

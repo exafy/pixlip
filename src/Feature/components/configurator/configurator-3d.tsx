@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Canvas, extend, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import pixlipImage from "../../../assets/pixlip_logo_classic.svg";
+import pixlipImage from "../../../assets/woman-3640935.jpg";
 
 const createCustomBoxGeometry = (
   width: number,
@@ -42,7 +42,7 @@ const Wall = (props: any) => {
     new THREE.MeshStandardMaterial({ color: props.color }), // Back
     new THREE.MeshStandardMaterial({ color: props.color }), // Top
     new THREE.MeshStandardMaterial({ color: props.color }), // Bottom
-    new THREE.MeshStandardMaterial({ map: texture }), // Left
+    new THREE.MeshStandardMaterial({ map: texture, color: props.color }), // Left
     new THREE.MeshStandardMaterial({ color: props.color }), // Right
   ];
 
@@ -84,13 +84,13 @@ const CounterBox = (props: any) => {
   const texture = useLoader(THREE.TextureLoader, props.image as string);
   return (
     <mesh {...props} ref={ref}>
-      <boxGeometry args={[1.5, 1, 1]} />
-      <meshStandardMaterial attach="material-0" color="black" />
-      <meshStandardMaterial attach="material-1" color="black" />
-      <meshStandardMaterial attach="material-2" color="black" />
-      <meshStandardMaterial attach="material-3" color="black" />
-      <meshStandardMaterial attach="material-4" color="black" />
-      <meshStandardMaterial attach="material-5" map={texture} />
+      <boxGeometry args={[1, 1, 0.36]} />
+      <meshStandardMaterial attach="material-0" color="white" />
+      <meshStandardMaterial attach="material-1" color="white" />
+      <meshStandardMaterial attach="material-2" color="white" />
+      <meshStandardMaterial attach="material-3" color="white" />
+      <meshStandardMaterial attach="material-4" color="white" />
+      <meshStandardMaterial attach="material-5" color="white" map={texture} />
     </mesh>
   );
 };
@@ -100,9 +100,27 @@ const Floor = (props: any) => {
   return (
     <mesh {...props} rotation={[-Math.PI / 2, 0, 0]}>
       <planeGeometry args={[length, width]} />
-      <meshStandardMaterial color={"#e5e5"} />
+      <meshStandardMaterial color={"#37393E"} />
     </mesh>
   );
+};
+
+const CameraController = () => {
+  const { camera, gl } = useThree<any>();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const aspect = window.innerWidth / window.innerHeight;
+      camera.aspect = aspect;
+      camera.updateProjectionMatrix();
+      gl.setSize(window.innerWidth, window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [camera, gl]);
+
+  return null;
 };
 
 interface ConfiguratorProps {
@@ -121,11 +139,6 @@ export const Configurator3dLayout = ({
   numberOfCounter = 1,
   wallImage,
 }: ConfiguratorProps) => {
-  // const [floorLength, setFloorLength] = useState(length);
-  // const [floorWidth, setFloorWidth] = useState(width);
-  // const [wallHeight, setWallHeight] = useState(height);
-  // const [noOfWalls, setNoOfWalls] = useState(numberOfWall);
-
   if (!wallImage) {
     wallImage = pixlipImage;
   }
@@ -136,7 +149,6 @@ export const Configurator3dLayout = ({
     noOfWalls: numberOfWall,
     numberOfCounter: numberOfCounter,
   });
-  console.log(dimensions);
 
   useEffect(() => {
     setDimensions((data) => ({
@@ -173,7 +185,6 @@ export const Configurator3dLayout = ({
 
   // CounterBox position
   const counterPosition = [0, 0.5, dimensions.floorWidth / 2 - 1]; // Adjust the Y position to sit on top of the floor
-  const aspect = dimensions.floorLength / dimensions.floorWidth;
 
   return (
     <Canvas
@@ -182,9 +193,10 @@ export const Configurator3dLayout = ({
         width: "calc(100vw - 385px)",
         backgroundColor: "#fff",
       }}
-      camera={{ position: [40, 40, 25], fov: 35, aspect: aspect }} // Adjust initial camera position
+      camera={{ position: [5, 5, 5], fov: 50 }}
     >
-      <ambientLight intensity={Math.PI} />
+      <CameraController />
+      <ambientLight intensity={3.5} />
       {/* Place and rotate floor */}
       <Floor
         position={[0, 0, 0]}
@@ -200,7 +212,7 @@ export const Configurator3dLayout = ({
         thickness={wallThickness}
         color="white"
         image={wallImage}
-      />{" "}
+      />
       {/* left wall */}
       {dimensions.noOfWalls >= 2 && (
         <Wall
@@ -233,11 +245,10 @@ export const Configurator3dLayout = ({
       />
       {/* Add controls for orbiting */}
       <OrbitControls
-        enableZoom={false}
         minDistance={1}
-        maxDistance={20}
+        maxDistance={50}
         maxPolarAngle={Math.PI / 2}
-        minPolarAngle={Math.PI / 3}
+        minPolarAngle={0}
       />
     </Canvas>
   );
