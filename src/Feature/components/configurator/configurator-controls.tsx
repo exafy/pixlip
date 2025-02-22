@@ -23,29 +23,13 @@ export const ConfiguratorControls = ({
     onControlChange?.(configuratorControls);
   }, [configuratorControls]);
 
-  const Colors = [
-    { color: "#FFFFFF", isActive: false },
-    { color: "#5D739C", isActive: false },
-    { color: "#D8D8D8", isActive: false },
-    { color: "#00B0F0", isActive: false },
-    { color: "#0058DD", isActive: false },
-    { color: "#000000", isActive: false },
-  ];
 
-  const slogans = [
-    { id: 1, message: "Join the new era of productivity!" },
-    { id: 2, message: "Create Once – Integrate Anywhere" },
-  ];
 
-  const typography = [
-    { id: 1, message: "Inter" },
-    { id: 2, message: "DM Sans" },
-  ];
+
 
   return (
     <StyledConfiguratorControls>
       <StyledHeading>GO Configurator</StyledHeading>
-      <div style={{ marginBottom: "30px" }} />
       <StyledSmallHeading>Shape your booth</StyledSmallHeading>
       <StyledControlHeading>{`Length: ${configuratorControls.length} meters`}</StyledControlHeading>
       <StyledSlider>
@@ -138,99 +122,10 @@ export const ConfiguratorControls = ({
           }}
         />
       </StyledTabs>
-      <StyledControlHeading>Counter</StyledControlHeading>
-      <StyledTabs>
-        <TabComponent
-          id={1}
-          isActive={configuratorControls.noOfCounters === 1}
-          text="Single Counter"
-          onClick={() => {
-            setConfiguratorControls((prevData) => ({
-              ...prevData,
-              noOfCounters: 1,
-            }));
-          }}
-        />
-        <TabComponent
-          id={2}
-          isActive={configuratorControls.noOfCounters === 2}
-          text="Two Counters"
-          onClick={() => {
-            setConfiguratorControls((prevData) => ({
-              ...prevData,
-              noOfCounters: 2,
-            }));
-          }}
-        />
-      </StyledTabs>
-      <div style={{ marginBottom: "30px" }} />
-      <StyledSmallHeading>Customize your booth</StyledSmallHeading>
-      <StyledControlHeading>Color</StyledControlHeading>
-      <StyledColorContainer>
-        {Colors.map((data) => (
-          <ColorCircle
-            color={data.color}
-            isActive={data.isActive}
-            key={data.color}
-          />
-        ))}
-        <StyledControlButton>
-          <Button width="fit-content" variant="filled">
-            + Add color
-          </Button>{" "}
-        </StyledControlButton>
-      </StyledColorContainer>
-
-      <StyledControlHeading>Slogans</StyledControlHeading>
-      {slogans.map((data) => (
-        <CardComponentOutline onClick={() => {}} key={data.message}>
-          {data.message}
-        </CardComponentOutline>
-      ))}
-      <StyledControlButton>
-        <Button width="fit-content" variant="filled">
-          + Add slogan
-        </Button>{" "}
-      </StyledControlButton>
-
-      <StyledControlHeading>Typography</StyledControlHeading>
-      {typography.map((data) => (
-        <CardComponentOutline onClick={() => {}} key={data.message}>
-          {data.message}
-        </CardComponentOutline>
-      ))}
-      <StyledControlButton>
-        <Button width="fit-content" variant="filled">
-          + Add typography
-        </Button>
-      </StyledControlButton>
-
-      <StyledControlHeading>Image</StyledControlHeading>
-      <StyledControlButton>
-        <Button width="fit-content" variant="filled">
-          + Add image
-        </Button>
-      </StyledControlButton>
-      <div style={{ marginBottom: "30px" }} />
-      <StyledSmallHeading>Customize your booth</StyledSmallHeading>
-      <StyledPriceTax>RRP excl. VAT</StyledPriceTax>
-      <StyledSmallPrice>8,840.00€ </StyledSmallPrice>
-      <Button width="fit-content" variant="filled">
-        Add to cart
-      </Button>
     </StyledConfiguratorControls>
   );
 };
-const StyledControlButton = styled.div`
-  button {
-    border: none;
-    background-color: #0071e3;
-  }
-  button:hover {
-    border: 1px solid #0071e3;
-    color: #0071e3;
-  }
-`;
+
 const StyledPriceTax = styled.div`
   color: #000;
   text-align: center;
@@ -247,8 +142,8 @@ const StyledConfiguratorControls = styled.div`
   width: 325px;
   overflow-y: overlay;
   flex-direction: column;
-  height: calc(100vh - 40px);
-  gap: 20px;
+  height: calc(100vh - 20px);
+  gap: 20px;s
   padding: 0 20px 0 0;
   align-items: center;
   &::placeholder {
@@ -324,12 +219,6 @@ const StyledTabs = styled.div`
   gap: 10px;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #000;s
 `;
 
-const StyledColorContainer = styled.div`
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
-`;

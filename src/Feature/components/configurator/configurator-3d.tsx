@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { Canvas, useFrame, useLoader, useThree } from "@react-three/fiber";
+import { Canvas, useLoader, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
-import pixlipImage from "../../../assets/woman-3640935.jpg";
+import pixlipImage from "../../../assets/dummy.jpg";
 
 const createCustomBoxGeometry = (
   width: number,

@@ -10,33 +10,12 @@ const routes = [
   {
     path: "/",
     element: (
-      <UnProtectedRoute>
-        <PageLayout>
-          <WelcomePage />
-        </PageLayout>
-      </UnProtectedRoute>
+      <PageLayout>
+        <GoConfigurator data={{}} />
+      </PageLayout>
     ),
   },
-  {
-    path: "/conversation/:id",
-    element: (
-      <ProtectedRoute>
-        <PageLayout>
-          <ConversationListPage />
-        </PageLayout>
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: "/configurator",
-    element: (
-      <ProtectedRoute>
-        <PageLayout>
-          <GoConfigurator data={{}} />
-        </PageLayout>
-      </ProtectedRoute>
-    ),
-  },
+
   { path: "*", element: <Navigate to="/" /> },
 ];
 

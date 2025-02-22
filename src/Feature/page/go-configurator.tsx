@@ -97,7 +97,6 @@ export const GoConfigurator = ({ data }: ConfiguratorProps) => {
               : null
           }
         />
-        <ConfiguratorConversationBox />
       </StyledConfiguratorSidePanel>
       <ConfiguratorControls
         onControlChange={(data) => {
@@ -110,17 +109,9 @@ export const GoConfigurator = ({ data }: ConfiguratorProps) => {
 
 const StyledConfiguratorLayout = styled.div`
   display: flex;
-  width: calc(100% - 40px);
+  width: calc(100% - 40px)
   padding: 20px;
   height: calc(100vh - 40px);
-`;
-
-const StyledConfiguratorControls = styled.div`
-  display: flex;
-  width: 300px;
-  overflow-y: overlay;
-  height: calc(100vh - 40px);
-  gap: 10px;
 `;
 
 const StyledConfiguratorSidePanel = styled.div`
@@ -128,8 +119,4 @@ const StyledConfiguratorSidePanel = styled.div`
   width: calc(100% - 300px);
   height: calc(100vh - 40px);
   flex-direction: column;
-`;
-const ConfiguratorBoothImageArea = styled.div`
-  display: flex;
-  width: calc(100% - 500px);
 `;
